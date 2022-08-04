@@ -56,6 +56,15 @@ const NavBar = () => {
                 Login
               </NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink
+                className="nav-link active"
+                aria-current="page"
+                to={"/register"}
+              >
+                Register
+              </NavLink>
+            </li>
           </ul>
         </div>
       </div>
