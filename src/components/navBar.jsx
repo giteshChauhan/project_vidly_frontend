@@ -1,6 +1,6 @@
 import { NavLink, Link } from "react-router-dom";
 
-const NavBar = () => {
+const NavBar = ({ user }) => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
@@ -47,24 +47,50 @@ const NavBar = () => {
                 Rentals
               </NavLink>
             </li>
-            <li className="nav-item">
-              <NavLink
-                className="nav-link active"
-                aria-current="page"
-                to={"/login"}
-              >
-                Login
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink
-                className="nav-link active"
-                aria-current="page"
-                to={"/register"}
-              >
-                Register
-              </NavLink>
-            </li>
+            {!user && (
+              <>
+                <li className="nav-item">
+                  <NavLink
+                    className="nav-link active"
+                    aria-current="page"
+                    to={"/login"}
+                  >
+                    Login
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    className="nav-link active"
+                    aria-current="page"
+                    to={"/register"}
+                  >
+                    Register
+                  </NavLink>
+                </li>
+              </>
+            )}
+            {user && (
+              <>
+                <li className="nav-item">
+                  <NavLink
+                    className="nav-link active"
+                    aria-current="page"
+                    to={"/profile"}
+                  >
+                    {user.name}
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    className="nav-link active"
+                    aria-current="page"
+                    to={"/logout"}
+                  >
+                    Logout
+                  </NavLink>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>
