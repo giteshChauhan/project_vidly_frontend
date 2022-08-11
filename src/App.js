@@ -10,6 +10,7 @@ import NotFound from "./components/notFound";
 import MovieForm from "./components/movieForm";
 import LoginForm from "./components/loginForm";
 import RegisterForm from "./components/registerForm";
+import PrivateRoutes from "./components/common/privateRoutes";
 import Logout from "./components/logout";
 import auth from "./services/authService";
 
@@ -32,11 +33,7 @@ function App() {
         <Routes>
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/login" element={<LoginForm />}></Route>
-          <Route path="/logout" element={<Logout />}></Route>
-          <Route path="/movies/:id" element={<MovieForm />}></Route>
-          <Route path="/movies" element={<Movies />}></Route>
-          <Route path="/customers" element={<Customers />}></Route>
-          <Route path="/rentals" element={<Rentals />}></Route>
+          <Route path="/movies" element={<Movies user={user} />}></Route>
           <Route path="/not-found" element={<NotFound />}></Route>
           <Route
             path="/"
@@ -46,6 +43,18 @@ function App() {
             path="/:id"
             element={<Navigate to={"/not-found"} replace={true} />}
           />
+
+          <Route element={<PrivateRoutes to={"/login"} />}>
+            <Route path="/logout" element={<Logout />}></Route>
+            <Route path="/rentals" element={<Rentals />}></Route>
+          </Route>
+
+          <Route
+            element={<PrivateRoutes to={"/not-found"} checkIsAdmin={true} />}
+          >
+            <Route path="/customers" element={<Customers />}></Route>
+            <Route path="/movies/:id" element={<MovieForm />}></Route>
+          </Route>
         </Routes>
       </main>
     </>
