@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import auth from "../services/authService";
 import Like from "./common/like";
 import Table from "./common/table";
 
@@ -28,20 +29,31 @@ class MoviesTable extends Component {
         />
       ),
     },
-    {
-      key: "delete",
-      content: (movie) => (
-        <button
-          onClick={() => {
-            this.props.onDelete(movie);
-          }}
-          className="btn btn-danger btn-sm"
-        >
-          Delete
-        </button>
-      ),
-    },
   ];
+
+  constructor() {
+    super();
+    this.addDeleteButton(auth.getCurrentUser());
+  }
+
+  addDeleteButton = (user) => {
+    if (user && user.isAdmin) {
+      const deleteButton = {
+        key: "delete",
+        content: (movie) => (
+          <button
+            onClick={() => {
+              this.props.onDelete(movie);
+            }}
+            className="btn btn-danger btn-sm"
+          >
+            Delete
+          </button>
+        ),
+      };
+      this.columns.push(deleteButton);
+    }
+  };
 
   render() {
     const { movies, onSort, sortColumn } = this.props;
