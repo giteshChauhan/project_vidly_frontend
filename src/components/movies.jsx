@@ -124,7 +124,7 @@ class Movies extends Component {
               New Movie
             </Link>
           )}
-          <p>Showing {totalCount} movies in the database.</p>
+          <p>Showing {totalCount} Top Tier Movies.</p>
           <SearchBox value={searchQuery} onChange={this.handleSearch} />
           <MoviesTable
             movies={movies}
