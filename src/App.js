@@ -12,6 +12,8 @@ import LoginForm from "./components/loginForm";
 import RegisterForm from "./components/registerForm";
 import PrivateRoutes from "./components/common/privateRoutes";
 import Logout from "./components/logout";
+import Footer from "./components/footer";
+import Genres from "./components/genres";
 import auth from "./services/authService";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -45,18 +47,20 @@ function App() {
           />
 
           <Route element={<PrivateRoutes to={"/login"} />}>
-            <Route path="/logout" element={<Logout />}></Route>
-            <Route path="/rentals" element={<Rentals />}></Route>
+            <Route path="/logout" element={<Logout />} />
+            <Route path="/rentals" element={<Rentals />} />
           </Route>
 
           <Route
             element={<PrivateRoutes to={"/not-found"} checkIsAdmin={true} />}
           >
-            <Route path="/customers" element={<Customers />}></Route>
-            <Route path="/movies/:id" element={<MovieForm />}></Route>
+            <Route path="/customers" element={<Customers />} />
+            <Route path="/movies/:id" element={<MovieForm />} />
+            <Route path="/genres" element={<Genres />} />
           </Route>
         </Routes>
       </main>
+      <Footer />
     </>
   );
 }
