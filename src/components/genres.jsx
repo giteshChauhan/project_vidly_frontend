@@ -30,7 +30,6 @@ const Genres = () => {
             onClick={() => {
               handleGenre(genre);
             }}
-            disabled={genre.name === ""}
             className="btn btn-primary btn-sm"
           >
             Edit
@@ -84,7 +83,7 @@ const Genres = () => {
       await editGenre(genre);
     } catch (ex) {
       if (ex.response && (ex.response.status === 404 || 400))
-        toast.error("Something not right");
+        toast.error(ex.response.data);
     }
   };
 
@@ -94,9 +93,10 @@ const Genres = () => {
       let originalGenres = [...genres];
       originalGenres.push(genre);
       setGenres(originalGenres);
+      setName("");
     } catch (ex) {
       if (ex.response && ex.response.status === 400)
-        toast.error("Genre already exists");
+        toast.error(ex.response.data);
     }
   };
 
@@ -123,6 +123,7 @@ const Genres = () => {
               className="form-control"
               placeholder="Add new genre"
               style={{ marginBottom: "10px" }}
+              value={name}
               onChange={(e) => setName(e.target.value)}
             />
             <button
