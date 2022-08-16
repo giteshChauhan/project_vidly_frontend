@@ -17,7 +17,7 @@ import Genres from "./components/genres";
 import auth from "./services/authService";
 
 import "react-toastify/dist/ReactToastify.css";
-import "./App.css";
+import "./css/App.css";
 
 function App() {
   const [user, setUser] = useState();
