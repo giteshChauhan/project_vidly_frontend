@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { deleteMovie, getMovies } from "../services/movieService";
 import { getGenres } from "../services/genreService";
+// import auth from "../services/authService";
 import Pagination from "./common/pagination";
 import { paginate } from "../utils/paginate";
 import ListGroup from "./common/listGroup";
@@ -67,6 +68,12 @@ class Movies extends Component {
     this.setState({ selectedGenre: null, searchQuery: query, currentPage: 1 });
   };
 
+  handleAddMovie = (movie) => {
+    //const user = auth.getCurrentUser();
+    // console.log(movie._id);
+    toast.info("Added");
+  };
+
   getPagedData = () => {
     const {
       pageSize,
@@ -107,12 +114,21 @@ class Movies extends Component {
 
     return (
       <div className="row">
-        <div className="col-3">
+        <div className="col-2">
           <ListGroup
             items={genres}
             selectedItem={selectedGenre}
             onItemSelect={this.handleGenreSelect}
           />
+          {user && user.isAdmin && (
+            <Link
+              className="btn btn-primary"
+              style={{ marginTop: "10px" }}
+              to={"/genres"}
+            >
+              Edit Genres
+            </Link>
+          )}
         </div>
         <div className="col">
           {user && user.isAdmin && (
@@ -132,6 +148,7 @@ class Movies extends Component {
             onLike={this.handleLike}
             onDelete={this.handleDelete}
             onSort={this.handleSort}
+            onAdd={this.handleAddMovie}
           />
           <Pagination
             itemsCount={totalCount}
