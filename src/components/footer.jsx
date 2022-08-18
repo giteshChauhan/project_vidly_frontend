@@ -4,7 +4,7 @@ import logo from "../icons/PVBW150.png";
 const Footer = () => {
   return (
     <footer className="bd-footer py-4 py-md-5 mt-5 bg-light">
-      <div className="container">
+      <div className="container py-4 py-md-5 px-4 px-md-3 mb-4">
         <div className="row">
           <div className="col-lg-3 mb-3">
             <Link
