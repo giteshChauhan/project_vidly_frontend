@@ -1,101 +1,208 @@
-import { NavLink, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import logo from "../icons/PV.png";
+import profileLogo from "../icons/profile.png";
+import title from "../icons/PV_title.png";
+import { Link } from "react-router-dom";
 
-const NavBar = ({ user }) => {
+function Navbar({ user }) {
+  const [size, setSize] = useState(window.innerWidth);
+
+  useEffect(() => {
+    setSize(window.innerWidth);
+  }, [size]);
+
+  const handleUser = () => {
+    if (user)
+      return [
+        { path: "/profile", title: user.name },
+        { path: "/logout", title: "Logout" },
+      ];
+    else
+      return [
+        { path: "/register", title: "Register" },
+        { path: "/login", title: "Login" },
+      ];
+  };
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <div className="container-fluid">
-        <Link className="navbar-brand" to={"/"}>
-          Vidly
-        </Link>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
+    <>
+      <header
+        className="navbar navbar-expand-lg navbar-dark bd-navbar sticky-top mb-5"
+        style={{ backgroundColor: "#6e00ff" }}
+      >
+        <nav
+          className="container-xxl bd-gutter flex-wrap flex-lg-nowrap"
+          aria-label="Main navigation"
         >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <NavLink
-                className="nav-link active"
-                aria-current="page"
-                to={"/movies"}
-              >
-                Movies
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink
-                className="nav-link active"
-                aria-current="page"
-                to={"/customers"}
-              >
-                Customers
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink
-                className="nav-link active"
-                aria-current="page"
-                to={"/rentals"}
-              >
-                Rentals
-              </NavLink>
-            </li>
-            {!user && (
-              <>
-                <li className="nav-item">
-                  <NavLink
-                    className="nav-link active"
-                    aria-current="page"
-                    to={"/login"}
-                  >
-                    Login
-                  </NavLink>
-                </li>
-                <li className="nav-item">
-                  <NavLink
-                    className="nav-link active"
-                    aria-current="page"
-                    to={"/register"}
-                  >
-                    Register
-                  </NavLink>
-                </li>
-              </>
-            )}
-            {user && (
-              <>
-                <li className="nav-item">
-                  <NavLink
-                    className="nav-link active"
-                    aria-current="page"
-                    to={"/profile"}
-                  >
-                    {user.name}
-                  </NavLink>
-                </li>
-                <li className="nav-item">
-                  <NavLink
-                    className="nav-link active"
-                    aria-current="page"
-                    to={"/logout"}
-                  >
-                    Logout
-                  </NavLink>
-                </li>
-              </>
-            )}
-          </ul>
-        </div>
-      </div>
-    </nav>
-  );
-};
+          <button
+            className="navbar-toggler p-2"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#bdNavbar"
+            aria-controls="bdNavbar"
+            aria-label="Toggle navigation"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              className="bi"
+              fill="currentColor"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fillRule="evenodd"
+                d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
+              ></path>
+            </svg>
+          </button>
 
-export default NavBar;
+          <Link
+            className="navbar-brand p-0 me-0 me-lg-2"
+            to={"/"}
+            aria-label="Vidly"
+          >
+            <img height="32" className="d-block my-1" src={logo} alt="VIDLY" />
+          </Link>
+
+          <div
+            className="offcanvas-lg offcanvas-start flex-grow-1"
+            tabIndex="-1"
+            id="bdNavbar"
+            aria-labelledby="bdNavbarOffcanvasLabel"
+            data-bs-scroll="true"
+          >
+            <div
+              className="offcanvas-header px-4 pb-0"
+              style={{ backgroundColor: "#6e00ff" }}
+            >
+              <img
+                className="offcanvas-title text-white"
+                id="bdNavbarOffcanvasLabel"
+                alt="VIDLY"
+                height="32px"
+                src={title}
+              />
+              <button
+                type="button"
+                className="btn-close btn-close-white"
+                data-bs-dismiss="offcanvas"
+                aria-label="Close"
+                data-bs-target="#bdNavbar"
+              ></button>
+            </div>
+
+            <div
+              className="offcanvas-body p-4 pt-0 p-lg-0"
+              style={{ backgroundColor: "#6e00ff" }}
+            >
+              <hr
+                className="d-lg-none text-white-50"
+                style={{ height: "2px", backgroundColor: "white" }}
+              />
+              <div className="navbar-nav flex-row flex-wrap bd-navbar-nav">
+                <div className="nav-item col-6 col-lg-auto">
+                  <Link to={"/"} className="nav-link">
+                    Movies
+                  </Link>
+                </div>
+              </div>
+
+              <hr
+                className="d-lg-none text-white-50"
+                style={{ height: "1px", backgroundColor: "white" }}
+              />
+
+              <div className="navbar-nav flex-row flex-wrap bd-navbar-nav">
+                <div className="nav-item col-6 col-lg-auto">
+                  <Link to={"/rentals"} className="nav-link">
+                    Rentals
+                  </Link>
+                </div>
+              </div>
+
+              {user && user.isAdmin && (
+                <>
+                  <hr
+                    className="d-lg-none text-white-50"
+                    style={{ height: "1px", backgroundColor: "white" }}
+                  />
+
+                  <div className="navbar-nav flex-row flex-wrap bd-navbar-nav">
+                    <div className="nav-item col-6 col-lg-auto">
+                      <Link to={"/customers"} className="nav-link">
+                        Customers
+                      </Link>
+                    </div>
+                  </div>
+                </>
+              )}
+
+              <hr className="d-lg-none text-white-50" />
+            </div>
+          </div>
+
+          {size > 992 ? (
+            <ul
+              className="navbar-nav flex-row flex-wrap ms-md-auto"
+              id="bdSidebar"
+            >
+              <li className="nav-item col-6 col-lg-auto">
+                <Link
+                  className="nav-link py-2 px-0 px-lg-2 myBtn"
+                  to={handleUser()[0].path}
+                  rel="noopener noreferrer"
+                >
+                  {handleUser()[0].title}
+                </Link>
+              </li>
+              <li className="nav-item py-1 col-12 col-lg-auto">
+                <div
+                  className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"
+                  style={{ width: "2px" }}
+                ></div>
+                <hr className="d-lg-none text-white" />
+              </li>
+              <li className="nav-item col-6 col-lg-auto">
+                <Link
+                  className="nav-link py-2 px-0 px-lg-2 myBtn"
+                  to={handleUser()[1].path}
+                  rel="noopener noreferrer"
+                >
+                  {handleUser()[1].title}
+                </Link>
+              </li>
+            </ul>
+          ) : (
+            <div className="dropdown">
+              <img
+                src={profileLogo}
+                height="32px"
+                type="button"
+                data-bs-toggle="dropdown"
+                alt="Me"
+              />
+              <ul className="dropdown-menu">
+                <li>
+                  <Link className="dropdown-item" to={handleUser()[0].path}>
+                    {handleUser()[0].title}
+                  </Link>
+                </li>
+                <li>
+                  <hr className="dropdown-divider text-white-50" />
+                </li>
+                <li>
+                  <Link className="dropdown-item" to={handleUser()[1].path}>
+                    {handleUser()[1].title}
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          )}
+        </nav>
+      </header>
+    </>
+  );
+}
+
+export default Navbar;
