@@ -1,8 +1,38 @@
+.offcanvas-lg{
+  max-width: 70% !important;
+}
+
+.dropdown-menu{
+  min-width: 100px !important;
+}
+
+.dropdown-menu.show{
+  left: -85px !important;
+}
+
+.nav-link{
+  color: rgba(232, 231, 231, 0.966);
+}
+
+.nav-link:hover{
+  color: whitesmoke;
+}
+
+.myFont{
+  font-family: 'graphik-regular', Helvetica, Arial, sans-serif;
+}
+
 .a-design{
   text-decoration: none;
   color: #495057;
 }
 
-.myFont{
-  font-family: 'graphik-regular', Helvetica, Arial, sans-serif;
+
+.myBtn{
+  border: 2px solid white;
+  border-radius: 5px;
+}
+
+.myBtn:hover{
+  border-radius: 8px;
 }
