@@ -34,7 +34,33 @@ class MoviesTable extends Component {
   constructor() {
     super();
     this.addDeleteButton(auth.getCurrentUser());
+    this.addAddButton(auth.getCurrentUser());
   }
+
+  addButton = (isDisable = true) => {
+    return {
+      key: "add",
+      content: (movie) => (
+        <button
+          onClick={() => {
+            this.props.onAdd(movie);
+          }}
+          className="btn btn-primary btn-sm"
+          disabled={isDisable}
+        >
+          Add
+        </button>
+      ),
+    };
+  };
+
+  addAddButton = (user) => {
+    if (user) {
+      this.columns.push(this.addButton(false));
+    } else {
+      this.columns.push(this.addButton());
+    }
+  };
 
   addDeleteButton = (user) => {
     if (user && user.isAdmin) {
@@ -54,7 +80,6 @@ class MoviesTable extends Component {
       this.columns.push(deleteButton);
     }
   };
-
   render() {
     const { movies, onSort, sortColumn } = this.props;
 
