@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import auth from "../services/authService";
 import Like from "./common/like";
 import Table from "./common/table";
+import add_enable from "../icons/add_enable.png";
+import add_disable from "../icons/add_disable.png";
+import delete_icon from "../icons/delete.png";
+import { toast } from "react-toastify";
 
 class MoviesTable extends Component {
   columns = [
@@ -38,20 +42,31 @@ class MoviesTable extends Component {
   }
 
   addButton = (isDisable = true) => {
-    return {
-      key: "add",
-      content: (movie) => (
-        <button
-          onClick={() => {
-            this.props.onAdd(movie);
-          }}
-          className="btn btn-primary btn-sm"
-          disabled={isDisable}
-        >
-          Add
-        </button>
-      ),
-    };
+    return isDisable
+      ? {
+          key: "add",
+          content: () => (
+            <img
+              className="myImg"
+              onClick={() => toast.info("Please Login/Register 😊")}
+              alt="Add"
+              src={add_disable}
+            />
+          ),
+        }
+      : {
+          key: "add",
+          content: (movie) => (
+            <img
+              className="myImg"
+              onClick={() => {
+                this.props.onAdd(movie);
+              }}
+              alt="Add"
+              src={add_enable}
+            />
+          ),
+        };
   };
 
   addAddButton = (user) => {
@@ -67,14 +82,14 @@ class MoviesTable extends Component {
       const deleteButton = {
         key: "delete",
         content: (movie) => (
-          <button
+          <img
             onClick={() => {
               this.props.onDelete(movie);
             }}
-            className="btn btn-danger btn-sm"
-          >
-            Delete
-          </button>
+            src={delete_icon}
+            alt="Delete"
+            className="myImg"
+          />
         ),
       };
       this.columns.push(deleteButton);
