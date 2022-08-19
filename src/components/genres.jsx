@@ -1,6 +1,8 @@
 import _ from "lodash";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import delete_icon from "../icons/delete.png";
+import edit_icon from "../icons/edit_icon.png";
 import {
   deleteGenre,
   getGenres,
@@ -26,28 +28,28 @@ const Genres = () => {
             placeholder={genre.name}
             onChange={(e) => (genre.name = e.target.value)}
           />
-          <button
+          <img
             onClick={() => {
               handleGenre(genre);
             }}
-            className="btn btn-primary btn-sm"
-          >
-            Edit
-          </button>
+            className="myImg"
+            src={edit_icon}
+            alt="Edit"
+          />
         </>
       ),
     },
     {
       key: "delete",
       content: (genre) => (
-        <button
+        <img
+          src={delete_icon}
           onClick={() => {
             handleDelete(genre._id);
           }}
-          className="btn btn-danger btn-sm"
-        >
-          Delete
-        </button>
+          className="myImg"
+          alt="Delete"
+        />
       ),
     },
   ];
@@ -127,7 +129,7 @@ const Genres = () => {
               onChange={(e) => setName(e.target.value)}
             />
             <button
-              className="btn btn-primary btn-sm"
+              className="btn btn-primary"
               onClick={() => handleNewGenre()}
               disabled={name === ""}
             >
