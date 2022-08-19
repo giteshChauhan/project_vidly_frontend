@@ -36,3 +36,18 @@
 .myBtn:hover{
   border-radius: 8px;
 }
+
+.myImg{
+  height: 32px;
+}
+.myImg:hover{
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px){
+  .col-2 {width: 66.666667% !important;margin-bottom: 20px;}
+}
+
+@media screen and (max-width: 401px){
+  .myImg {height: 20px}
+}
