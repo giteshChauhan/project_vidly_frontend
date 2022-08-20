@@ -44,8 +44,17 @@
   cursor: pointer;
 }
 
+@media screen and (max-width: 992px){
+  #bdSidebar {display: none;}
+}
+
+@media screen and (min-width: 992px) {
+  #dropdownProfile {display: none;}
+}
+
 @media screen and (max-width: 768px){
   .col-2 {width: 66.666667% !important;margin-bottom: 20px;}
+  #bdSidebar {display: none;}
 }
 
 @media screen and (max-width: 401px){
