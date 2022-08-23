@@ -2,9 +2,9 @@ import axios from "axios";
 import logger from "./logService";
 import { toast } from "react-toastify";
 
-axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+const herokuServices = axios.create({ baseURL: process.env.REACT_APP_API_URL });
 
-axios.interceptors.response.use(null, (error) => {
+herokuServices.interceptors.response.use(null, (error) => {
   const expectedError =
     error.response &&
     error.response.status >= 400 &&
@@ -19,14 +19,14 @@ axios.interceptors.response.use(null, (error) => {
 });
 
 function setJwt(jwt) {
-  axios.defaults.headers.common["x-auth-token"] = jwt;
+  herokuServices.defaults.headers.common["x-auth-token"] = jwt;
 }
 
 const http = {
-  get: axios.get,
-  post: axios.post,
-  put: axios.put,
-  delete: axios.delete,
+  get: herokuServices.get,
+  post: herokuServices.post,
+  put: herokuServices.put,
+  delete: herokuServices.delete,
   setJwt,
 };
 
