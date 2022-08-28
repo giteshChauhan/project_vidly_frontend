@@ -9,7 +9,7 @@ exports.handler = async function (event, context) {
       params: {
         q: keyword,
         part: "snippet",
-        maxResults: 6,
+        maxResults: 4,
         key: process.env.REACT_APP_YTAPI_KEY,
       },
       headers: {},
