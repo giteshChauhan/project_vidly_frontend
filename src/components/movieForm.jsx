@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getMovie, saveMovie } from "../services/movieService";
 import { getGenres } from "./../services/genreService";
 
+import MoviesList from "./moviesList";
 import VideosList from "./videosList";
 import Form from "./common/form";
 import SearchBox from "./common/searchBox";
@@ -22,6 +23,9 @@ class MovieFormComponent extends Form {
     searchTitle: "",
     videosMetaData: [],
     videoId: "",
+    moviesMetaData: [],
+    movieTitle: "",
+    movieCountry: "",
     genres: [],
     errors: {},
   };
@@ -38,6 +42,11 @@ class MovieFormComponent extends Form {
     dailyRentalRate: Joi.number().required().min(0).max(10).label("Rate"),
   };
 
+  async componentDidMount() {
+    await this.populateGenres();
+    await this.populateMovie();
+  }
+
   async populateGenres() {
     const { data: genres } = await getGenres();
     this.setState({ genres });
@@ -53,11 +62,6 @@ class MovieFormComponent extends Form {
       if (ex.response && ex.response.status === 400)
         this.props.navigate("/not-found", { replace: true });
     }
-  }
-
-  async componentDidMount() {
-    await this.populateGenres();
-    await this.populateMovie();
   }
 
   mapToViewModel(movie) {
@@ -93,8 +97,26 @@ class MovieFormComponent extends Form {
     this.setState({ videoId });
   };
 
+  handleMovieSearch = async () => {
+    const { movieTitle, movieCountry } = this.state;
+    const { data } = await axios.get(
+      `/.netlify/functions/fetchMovies?title=${movieTitle}&country=${movieCountry}`
+    );
+    console.log(data.results);
+    const moviesMetaData = data.results;
+    this.setState({ moviesMetaData });
+  };
+
   render() {
-    const { searchTitle, videosMetaData, genres, videoId } = this.state;
+    const {
+      searchTitle,
+      videosMetaData,
+      genres,
+      videoId,
+      movieTitle,
+      movieCountry,
+      moviesMetaData,
+    } = this.state;
 
     return (
       <div className="container">
@@ -114,30 +136,75 @@ class MovieFormComponent extends Form {
           <div className="break"></div>
 
           <div className="col">
-            <h3>Search Movies</h3>
-            <div className="input-group">
-              <SearchBox
-                value={searchTitle}
-                onChange={this.handleSearchChange}
-              />
-              <button
-                type="button"
-                className="btn btn-outline-secondary"
-                hidden={searchTitle === ""}
-                style={{ padding: "2px", height: "38px" }}
-                onClick={this.handleSearch}
-              >
-                Search
-              </button>
+            <div>
+              <h3>Search Movies</h3>
+              <div className="input-group">
+                <input
+                  className="form-control"
+                  name="query"
+                  type="text"
+                  style={{ marginBottom: 10 }}
+                  placeholder="title..."
+                  onChange={(event) =>
+                    this.setState({ movieTitle: event.target.value })
+                  }
+                />
+                <input
+                  className="form-control"
+                  name="query"
+                  type="text"
+                  style={{ marginBottom: 10 }}
+                  placeholder="country..."
+                  onChange={(event) =>
+                    this.setState({ movieCountry: event.target.value })
+                  }
+                  title="in|us|fr. Separated by comma for multiple options. Ex : us,fr,…"
+                />
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary"
+                  hidden={(movieTitle && movieCountry) === ""}
+                  style={{ padding: "2px", height: "38px" }}
+                  onClick={this.handleMovieSearch}
+                >
+                  Search
+                </button>
+              </div>
+              {moviesMetaData.length ? (
+                <MoviesList data={moviesMetaData} />
+              ) : (
+                <h6 style={{ color: "gray" }}>search to see movies</h6>
+              )}
             </div>
-            {videosMetaData.length ? (
-              <VideosList
-                onVideoSelected={this.handleVideoSelection}
-                data={videosMetaData}
-              />
-            ) : (
-              <h6 style={{ color: "gray" }}>search to see results</h6>
-            )}
+
+            <hr style={{ color: "gray" }} />
+
+            <div>
+              <h3>Search Videos</h3>
+              <div className="input-group">
+                <SearchBox
+                  value={searchTitle}
+                  onChange={this.handleSearchChange}
+                />
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary"
+                  hidden={searchTitle === ""}
+                  style={{ padding: "2px", height: "38px" }}
+                  onClick={this.handleSearch}
+                >
+                  Search
+                </button>
+              </div>
+              {videosMetaData.length ? (
+                <VideosList
+                  onVideoSelected={this.handleVideoSelection}
+                  data={videosMetaData}
+                />
+              ) : (
+                <h6 style={{ color: "gray" }}>search to see videos</h6>
+              )}
+            </div>
           </div>
         </div>
       </div>
