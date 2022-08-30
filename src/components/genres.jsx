@@ -1,20 +1,32 @@
-import _ from "lodash";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import _ from "lodash";
+
 import delete_icon from "../icons/delete.png";
 import edit_icon from "../icons/edit_icon.png";
+
 import {
   deleteGenre,
   getGenres,
   addGenre,
   editGenre,
 } from "../services/genreService";
+
+import ConfirmModal from "./common/confirmModal";
 import Table from "./common/table";
 
 const Genres = () => {
   const [genres, setGenres] = useState([]);
   const [sortColumn, setSortColumn] = useState({ path: "name", order: "asc" });
   const [name, setName] = useState("");
+  const [confirmModal, setConfirmModal] = useState({
+    isOpen: false,
+    title: "",
+    body: "",
+    confirmStyle: "",
+    confirmText: "",
+    data: {},
+  });
   const columns = [
     { path: "name", label: "Name" },
     {
@@ -45,7 +57,7 @@ const Genres = () => {
         <img
           src={delete_icon}
           onClick={() => {
-            handleDelete(genre._id);
+            handleConfirmModal(genre);
           }}
           className="myImg"
           alt="Delete"
@@ -83,6 +95,7 @@ const Genres = () => {
       originalGenres[index].name = genre.name;
       setGenres(originalGenres);
       await editGenre(genre);
+      toast.success("Genre edited successfully");
     } catch (ex) {
       if (ex.response && (ex.response.status === 404 || 400))
         toast.error(ex.response.data);
@@ -92,6 +105,7 @@ const Genres = () => {
   const handleNewGenre = async () => {
     try {
       const { data: genre } = await addGenre({ name: name });
+      toast.success(`${genre.name} added sucessfully`);
       let originalGenres = [...genres];
       originalGenres.push(genre);
       setGenres(originalGenres);
@@ -102,18 +116,40 @@ const Genres = () => {
     }
   };
 
-  const handleDelete = async (genreId) => {
+  const handleCloseModal = () => {
+    const confirmModal = {
+      isOpen: false,
+    };
+    setConfirmModal(confirmModal);
+  };
+
+  const handleConfirmModal = (genre) => {
+    const confirmModal = {
+      isOpen: true,
+      title: "Delete Genre",
+      body: `Sure you want to delete ${genre.name}?`,
+      confirmStyle: "btn btn-danger",
+      confirmText: "Delete",
+      data: genre,
+    };
+    setConfirmModal(confirmModal);
+  };
+
+  const handleDelete = async (genre) => {
     const originalGenres = [...genres];
-    setGenres(originalGenres.filter((g) => g._id !== genreId));
+    setGenres(originalGenres.filter((g) => g._id !== genre._id));
 
     try {
-      await deleteGenre(genreId);
+      await deleteGenre(genre._id);
+      toast.success(`${genre.name} deleted successfully`);
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
         toast.error("This genre has already been deleted");
       setGenres(originalGenres);
     }
   };
+
+  const { title, isOpen, body, confirmStyle, confirmText, data } = confirmModal;
 
   return (
     <>
@@ -130,6 +166,7 @@ const Genres = () => {
             />
             <button
               className="btn btn-primary"
+              style={{ background: "#6e00ff" }}
               onClick={() => handleNewGenre()}
               disabled={name === ""}
             >
@@ -146,6 +183,15 @@ const Genres = () => {
           />
         </div>
       </div>
+      <ConfirmModal
+        isOpen={isOpen}
+        title={title}
+        body={body}
+        confirmStyle={confirmStyle}
+        confirmText={confirmText}
+        onConfirm={() => handleDelete(data)}
+        onCloseModal={handleCloseModal}
+      />
     </>
   );
 };
