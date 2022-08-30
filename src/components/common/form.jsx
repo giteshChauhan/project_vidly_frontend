@@ -53,7 +53,7 @@ class Form extends Component {
       <button
         disabled={this.validate()}
         className="btn btn-primary"
-        style={{ marginTop: "12px" }}
+        style={{ marginTop: "12px", background: "#6e00ff" }}
       >
         {label}
       </button>
