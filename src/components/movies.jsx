@@ -30,26 +30,17 @@ class Movies extends Component {
   }
 
   handleDelete = async (movie) => {
-    const originalMovies = this.state.movies;
-    const movies = originalMovies.filter((m) => m._id !== movie._id);
-    this.setState({ movies });
-
+    let { movies } = this.state;
+    const originalMovies = [...movies];
     try {
+      movies = movies.filter((m) => m._id !== movie._id);
+      this.setState({ movies });
       await deleteMovie(movie._id);
-    } catch (ex) {
-      if (ex.response && ex.response.status === 404)
-        toast.error("This movie has already been deleted");
-
+      toast.success(`${movie.title} deleted successfully`);
+    } catch (error) {
+      toast.error("Something failed");
       this.setState({ movies: originalMovies });
     }
-  };
-
-  handleLike = (movie) => {
-    const movies = [...this.state.movies];
-    const index = movies.indexOf(movie);
-    movie[index] = { ...movies[index] };
-    movies[index].liked = !movies[index].liked;
-    this.setState({ movies });
   };
 
   handlePageChange = (page) => {
@@ -71,7 +62,7 @@ class Movies extends Component {
   handleAddMovie = (movie) => {
     //const user = auth.getCurrentUser();
     // console.log(movie._id);
-    toast.info("Added");
+    toast.info(`Added ${movie.title}`);
   };
 
   getPagedData = () => {
@@ -123,7 +114,7 @@ class Movies extends Component {
           {user && user.isAdmin && (
             <Link
               className="btn btn-primary"
-              style={{ marginTop: "10px" }}
+              style={{ marginTop: "10px", background: "#6e00ff" }}
               to={"/genres"}
             >
               Edit Genres
@@ -134,7 +125,7 @@ class Movies extends Component {
           {user && user.isAdmin && (
             <Link
               className="btn btn-primary"
-              style={{ marginBottom: "10px" }}
+              style={{ marginBottom: "10px", background: "#6e00ff" }}
               to={"/movies/new"}
             >
               New Movie
@@ -145,7 +136,6 @@ class Movies extends Component {
           <MoviesTable
             movies={movies}
             sortColumn={sortColumn}
-            onLike={this.handleLike}
             onDelete={this.handleDelete}
             onSort={this.handleSort}
             onAdd={this.handleAddMovie}
