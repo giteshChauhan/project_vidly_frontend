@@ -44,6 +44,7 @@ class MovieFormComponent extends Form {
   };
 
   async componentDidMount() {
+    document.title = "VIDLY | MovieForm";
     await this.populateGenres();
     await this.populateMovie();
   }
