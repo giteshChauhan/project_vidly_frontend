@@ -13,6 +13,10 @@ class LoginForm extends Form {
     password: Joi.string().required().label("Password"),
   };
 
+  componentDidMount() {
+    document.title = "VIDLY | Login";
+  }
+
   doSubmit = async () => {
     try {
       const { data } = this.state;
