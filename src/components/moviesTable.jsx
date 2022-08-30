@@ -1,14 +1,28 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+
 import auth from "../services/authService";
-import Like from "./common/like";
+
+import ConfirmModal from "./common/confirmModal";
 import Table from "./common/table";
+
 import add_enable from "../icons/add_enable.png";
 import add_disable from "../icons/add_disable.png";
 import delete_icon from "../icons/delete.png";
-import { toast } from "react-toastify";
+import edit_icon from "../icons/edit_icon.png";
 
 class MoviesTable extends Component {
+  state = {
+    confirmModal: {
+      isOpen: false,
+      title: "",
+      body: "",
+      confirmStyle: "",
+      confirmText: "",
+      data: {},
+    },
+  };
   columns = [
     {
       path: "title",
@@ -20,25 +34,16 @@ class MoviesTable extends Component {
       ),
     },
     { path: "genre.name", label: "Genre" },
-    { path: "numberInStock", label: "Stock" },
-    { path: "dailyRentalRate", label: "Rate" },
-    {
-      key: "like",
-      content: (movie) => (
-        <Like
-          liked={movie.liked}
-          onClick={() => {
-            this.props.onLike(movie);
-          }}
-        />
-      ),
-    },
+    { path: "year", label: "Year" },
+    { path: "rating", label: "IMDb" },
   ];
 
   constructor() {
     super();
-    this.addDeleteButton(auth.getCurrentUser());
-    this.addAddButton(auth.getCurrentUser());
+    const user = auth.getCurrentUser();
+    this.addDeleteButton(user);
+    this.addAddButton(user);
+    this.addEditButton(user);
   }
 
   addButton = (isDisable = true) => {
@@ -79,32 +84,76 @@ class MoviesTable extends Component {
 
   addDeleteButton = (user) => {
     if (user && user.isAdmin) {
-      const deleteButton = {
+      this.columns.push({
         key: "delete",
         content: (movie) => (
           <img
-            onClick={() => {
-              this.props.onDelete(movie);
-            }}
             src={delete_icon}
             alt="Delete"
             className="myImg"
+            onClick={() => this.handleConfirmModal(movie)}
           />
         ),
-      };
-      this.columns.push(deleteButton);
+      });
     }
   };
+
+  handleCloseModal = () => {
+    const confirmModal = {
+      isOpen: false,
+    };
+    this.setState({ confirmModal });
+  };
+
+  handleConfirmModal = (movie) => {
+    const confirmModal = {
+      isOpen: true,
+      title: "Delete Movie",
+      body: `Sure you want to delete ${movie.title}?`,
+      confirmStyle: "btn btn-danger",
+      confirmText: "Delete",
+      data: movie,
+    };
+    this.setState({ confirmModal });
+  };
+
+  addEditButton = (user) => {
+    if (user && user.isAdmin) {
+      const editButton = {
+        key: "edit",
+        content: (movie) => (
+          <Link to={`/movies/${movie._id}`} style={{ textDecoration: "none" }}>
+            <img src={edit_icon} className="myImg" alt={movie.title} />
+          </Link>
+        ),
+      };
+      this.columns.push(editButton);
+    }
+  };
+
   render() {
     const { movies, onSort, sortColumn } = this.props;
+    const { title, isOpen, body, confirmStyle, confirmText, data } =
+      this.state.confirmModal;
 
     return (
-      <Table
-        columns={this.columns}
-        data={movies}
-        sortColumn={sortColumn}
-        onSort={onSort}
-      />
+      <>
+        <Table
+          columns={this.columns}
+          data={movies}
+          sortColumn={sortColumn}
+          onSort={onSort}
+        />
+        <ConfirmModal
+          isOpen={isOpen}
+          title={title}
+          body={body}
+          confirmStyle={confirmStyle}
+          confirmText={confirmText}
+          onConfirm={() => this.props.onDelete(data)}
+          onCloseModal={this.handleCloseModal}
+        />
+      </>
     );
   }
 }
