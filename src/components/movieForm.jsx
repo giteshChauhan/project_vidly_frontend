@@ -1,4 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { getMovie, saveMovie } from "../services/movieService";
 import { getGenres } from "./../services/genreService";
@@ -17,8 +18,10 @@ class MovieFormComponent extends Form {
     data: {
       title: "",
       genreId: "",
-      numberInStock: "",
-      dailyRentalRate: "",
+      year: "",
+      rating: "",
+      yt_id: "",
+      imdb_id: "",
     },
     searchTitle: "",
     videosMetaData: [],
@@ -34,12 +37,10 @@ class MovieFormComponent extends Form {
     _id: Joi.string(),
     title: Joi.string().required().label("Title"),
     genreId: Joi.string().required().label("Genre"),
-    numberInStock: Joi.number()
-      .required()
-      .min(0)
-      .max(100)
-      .label("Number In Stock"),
-    dailyRentalRate: Joi.number().required().min(0).max(10).label("Rate"),
+    year: Joi.number().required().min(1950).max(2024).label("Year"),
+    rating: Joi.number().required().min(0).max(10).label("IMDb"),
+    yt_id: Joi.string().required().length(11).label("YT_ID"),
+    imdb_id: Joi.string().required().min(9).max(10).label("IMDb_ID"),
   };
 
   async componentDidMount() {
@@ -68,14 +69,18 @@ class MovieFormComponent extends Form {
     return {
       title: movie.title,
       genreId: movie.genre._id,
-      numberInStock: movie.numberInStock,
-      dailyRentalRate: movie.dailyRentalRate,
+      year: movie.year,
+      rating: movie.rating,
+      yt_id: movie.yt_id,
+      imdb_id: movie.imdb_id,
     };
   }
 
   doSubmit = async () => {
-    await saveMovie(this.state.data, this.props.params.id);
+    const { data } = this.state;
+    await saveMovie(data, this.props.params.id);
     this.props.navigate("/movies", { replace: true });
+    toast.success(`${data.title} added to db`);
   };
 
   handleSearchChange = (searchTitle) => {
@@ -102,7 +107,6 @@ class MovieFormComponent extends Form {
     const { data } = await axios.get(
       `/.netlify/functions/fetchMovies?title=${movieTitle}&country=${movieCountry}`
     );
-    console.log(data.results);
     const moviesMetaData = data.results;
     this.setState({ moviesMetaData });
   };
@@ -126,8 +130,10 @@ class MovieFormComponent extends Form {
             <form onSubmit={this.handleSubmit}>
               {this.renderInput("title", "Title")}
               {this.renderSelect("genreId", "Genre", genres)}
-              {this.renderInput("numberInStock", "Number in Stock")}
-              {this.renderInput("dailyRentalRate", "Rate")}
+              {this.renderInput("year", "Year")}
+              {this.renderInput("rating", "IMDb")}
+              {this.renderInput("yt_id", "YT_ID")}
+              {this.renderInput("imdb_id", "IMDb_ID")}
               {this.renderButton("Save")}
             </form>
             {videoId && <Videoplayer videoId={videoId} />}
