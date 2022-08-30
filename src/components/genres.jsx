@@ -72,6 +72,7 @@ const Genres = () => {
   }
 
   useEffect(() => {
+    document.title = "VIDLY | Genres";
     getGenresData();
   }, []);
 
