@@ -15,6 +15,10 @@ class RegisterForm extends Form {
     name: Joi.string().required().label("Name"),
   };
 
+  componentDidMount() {
+    document.title = "VIDLY | Register";
+  }
+
   doSubmit = async () => {
     try {
       const response = await register(this.state.data);
