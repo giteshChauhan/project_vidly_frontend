@@ -1,10 +1,10 @@
 import movieLogo from "../icons/PV.png";
 
 const Movie = ({ data }) => {
-  return data.map(({ title, ratings }) => {
+  return data.map(({ id, title, year, image, titleType }) => {
     let url = "";
     try {
-      url = title.image.url;
+      url = image.url;
     } catch (error) {
       url = movieLogo;
     }
@@ -16,15 +16,15 @@ const Movie = ({ data }) => {
           margin: "3px",
           boxShadow: "0 0  1px 1px #6e00ff",
         }}
-        key={title.id}
+        key={id}
       >
         <div className="crop-container">
-          <img src={url} alt={title.title} className="card-img-top" />
+          <img src={url} alt={title} className="card-img-top" />
         </div>
         <div className="card-body">
-          <h5 className="card-title">{title.title}</h5>
+          <h5 className="card-title">{title}</h5>
           <p className="card-text">
-            {title.id}, {title.year}, {ratings.rating}
+            {id}, {year}, {titleType}
           </p>
         </div>
       </div>
