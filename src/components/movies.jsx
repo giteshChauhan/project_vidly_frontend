@@ -23,6 +23,7 @@ class Movies extends Component {
   };
 
   async componentDidMount() {
+    document.title = "VIDLY | Home";
     const { data } = await getGenres();
     const genres = [{ name: "All Genres", _id: 0 }, ...data];
     const { data: movies } = await getMovies();
