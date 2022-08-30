@@ -78,6 +78,28 @@
   display: none;
 }
 
+.modalContainer{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 60px;
+  left: 0px;
+  background: opacity(10%);
+  backdrop-filter: blur(1px);
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  padding: 5px;
+}
+
+.myModal{
+      background-color: white;
+      border: 1px solid #6e00ff;
+      border-radius: 10px;
+      box-shadow: 0 0 4px 4px #e2dada;
+      padding: 4px;
+}
+
 @media screen and (max-width: 992px){
   #bdSidebar {display: none;}
   .break { display: block; flex-basis: 100%}
