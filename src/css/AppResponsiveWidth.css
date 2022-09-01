@@ -1,0 +1,35 @@
+@media  screen and (max-width: 1200px) {
+    .myPlot{
+      width: 48rem;
+    }
+  }
+  
+  @media screen and (max-width: 992px){
+    #bdSidebar {display: none;}
+    .break { display: block; flex-basis: 100%}
+    .my-modal-body{
+      overflow-y: auto !important;
+      height: 580px;
+    }
+    .myPlot{
+      width: 40rem;
+    }
+  }
+  
+  @media screen and (min-width: 992px) {
+    #dropdownProfile {display: none;}
+  }
+  
+  
+  
+  @media screen and (max-width: 768px){
+    .col-2 {width: 66.666667% !important;margin-bottom: 20px;}
+    #bdSidebar {display: none;}  
+    .myPlot{
+      width: 20rem;
+    }
+  }
+  
+  @media screen and (max-width: 401px){
+    .myImg {height: 20px}
+  }
