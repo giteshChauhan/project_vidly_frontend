@@ -1,0 +1,26 @@
+@media screen and (max-height: 750px) {
+    .my-modal-body{
+      height:450px;
+    }
+  }
+  
+  @media screen and (max-height: 620px) {
+    .my-modal-body{
+      height:350px;
+    }
+  }
+  @media screen and (max-height: 520px) {
+    .my-modal-body{
+      height:250px;
+    }
+  }
+  @media screen and (max-height: 420px) {
+    .my-modal-body{
+      height:150px;
+    }
+  }
+  @media screen and (max-height: 320px) {
+    .my-modal-body{
+      height:100px;
+    }
+  }
