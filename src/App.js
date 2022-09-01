@@ -18,6 +18,8 @@ import auth from "./services/authService";
 
 import "react-toastify/dist/ReactToastify.css";
 import "./css/App.css";
+import "./css/AppResponsiveWidth.css";
+import "./css/AppResponsiveHeight.css";
 
 function App() {
   const [user, setUser] = useState();
