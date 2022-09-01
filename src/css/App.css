@@ -142,7 +142,7 @@
 @media screen and (max-width: 992px){
   #bdSidebar {display: none;}
   .break { display: block; flex-basis: 100%}
-  .modal-body{
+  .my-modal-body{
     overflow-y: auto !important;
     height: 580px;
   }
