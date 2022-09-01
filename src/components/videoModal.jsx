@@ -99,7 +99,7 @@ const VideoModal = ({ isOpen, onClose, movie }) => {
               aria-label="Close"
             />
           </div>
-          <div className="modal-body">
+          <div className="my-modal-body">
             <div className="videoPlayerModal">
               {ytId !== "" && <Videoplayer videoId={ytId} />}
             </div>
