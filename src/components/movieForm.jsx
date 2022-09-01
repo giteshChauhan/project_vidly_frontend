@@ -4,14 +4,14 @@ import { toast } from "react-toastify";
 import { getMovie, saveMovie } from "../services/movieService";
 import { getGenres } from "./../services/genreService";
 
+import Videoplayer from "./common/videoPlayer";
+import SearchBox from "./common/searchBox";
 import MoviesList from "./moviesList";
 import VideosList from "./videosList";
 import Form from "./common/form";
-import SearchBox from "./common/searchBox";
 
 import Joi from "joi-browser";
 import axios from "axios";
-import Videoplayer from "./common/videoPlayer";
 
 class MovieFormComponent extends Form {
   state = {
@@ -22,6 +22,7 @@ class MovieFormComponent extends Form {
       rating: "",
       yt_id: "",
       imdb_id: "",
+      contentType: "",
     },
     searchTitle: "",
     videosMetaData: [],
@@ -41,6 +42,7 @@ class MovieFormComponent extends Form {
     rating: Joi.number().required().min(0).max(10).label("IMDb"),
     yt_id: Joi.string().required().length(11).label("YT_ID"),
     imdb_id: Joi.string().required().min(9).max(10).label("IMDb_ID"),
+    contentType: Joi.string().required(),
   };
 
   async componentDidMount() {
@@ -74,6 +76,7 @@ class MovieFormComponent extends Form {
       rating: movie.rating,
       yt_id: movie.yt_id,
       imdb_id: movie.imdb_id,
+      contentType: movie.contentType,
     };
   }
 
@@ -135,6 +138,7 @@ class MovieFormComponent extends Form {
               {this.renderInput("rating", "IMDb")}
               {this.renderInput("yt_id", "YT_ID")}
               {this.renderInput("imdb_id", "IMDb_ID")}
+              {this.renderInput("contentType", "ContentType")}
               {this.renderButton("Save")}
             </form>
             {videoId && <Videoplayer videoId={videoId} />}
