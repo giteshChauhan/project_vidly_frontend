@@ -52,7 +52,7 @@ const VideoModal = ({ isOpen, onClose, movie }) => {
 
   try {
     title = movie.title;
-    contentType = movie.contentType;
+    contentType = movie.contentType.name;
     ytId = movie.yt_id;
     imdbId = movie.imdb_id;
   } catch (e) {
@@ -91,13 +91,14 @@ const VideoModal = ({ isOpen, onClose, movie }) => {
             <div className="divider"></div>
             <button
               type="button"
-              className="btn-close m-2"
+              className="myCloseBtn m-2"
               onClick={() => {
                 onClose();
                 setMore(false);
               }}
-              aria-label="Close"
-            />
+            >
+              X
+            </button>
           </div>
           <div className="my-modal-body">
             <div className="videoPlayerModal">
