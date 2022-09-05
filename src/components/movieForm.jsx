@@ -1,8 +1,10 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
+import { getContentType } from "./../services/contentTypeService";
 import { getMovie, saveMovie } from "../services/movieService";
 import { getGenres } from "./../services/genreService";
+import { getCinema } from "./../services/cinemaService";
 
 import Videoplayer from "./common/videoPlayer";
 import SearchBox from "./common/searchBox";
@@ -22,7 +24,8 @@ class MovieFormComponent extends Form {
       rating: "",
       yt_id: "",
       imdb_id: "",
-      contentType: "",
+      contentTypeId: "",
+      cinemaId: "",
     },
     searchTitle: "",
     videosMetaData: [],
@@ -31,6 +34,8 @@ class MovieFormComponent extends Form {
     movieTitle: "",
     movieCountry: "",
     genres: [],
+    cinema: [],
+    contentType: [],
     errors: {},
   };
 
@@ -42,12 +47,15 @@ class MovieFormComponent extends Form {
     rating: Joi.number().required().min(0).max(10).label("IMDb"),
     yt_id: Joi.string().required().length(11).label("YT_ID"),
     imdb_id: Joi.string().required().min(9).max(10).label("IMDb_ID"),
-    contentType: Joi.string().required(),
+    contentTypeId: Joi.string().required().label("ContentType"),
+    cinemaId: Joi.string().required().label("Cinema"),
   };
 
   async componentDidMount() {
     document.title = "VIDLY | MovieForm";
     await this.populateGenres();
+    await this.populateCinema();
+    await this.populateContentType();
     await this.populateMovie();
   }
 
@@ -68,6 +76,16 @@ class MovieFormComponent extends Form {
     }
   }
 
+  async populateCinema() {
+    const { data: cinema } = await getCinema();
+    this.setState({ cinema });
+  }
+
+  async populateContentType() {
+    const { data: contentType } = await getContentType();
+    this.setState({ contentType });
+  }
+
   mapToViewModel(movie) {
     return {
       title: movie.title,
@@ -76,7 +94,8 @@ class MovieFormComponent extends Form {
       rating: movie.rating,
       yt_id: movie.yt_id,
       imdb_id: movie.imdb_id,
-      contentType: movie.contentType,
+      contentTypeId: movie.contentType._id,
+      cinemaId: movie.cinema._id,
     };
   }
 
@@ -120,6 +139,8 @@ class MovieFormComponent extends Form {
       searchTitle,
       videosMetaData,
       genres,
+      cinema,
+      contentType,
       videoId,
       movieTitle,
       movieCountry,
@@ -134,11 +155,12 @@ class MovieFormComponent extends Form {
             <form onSubmit={this.handleSubmit}>
               {this.renderInput("title", "Title")}
               {this.renderSelect("genreId", "Genre", genres)}
+              {this.renderSelect("contentTypeId", "ContentType", contentType)}
+              {this.renderSelect("cinemaId", "Cinema", cinema)}
               {this.renderInput("year", "Year")}
               {this.renderInput("rating", "IMDb")}
               {this.renderInput("yt_id", "YT_ID")}
               {this.renderInput("imdb_id", "IMDb_ID")}
-              {this.renderInput("contentType", "ContentType")}
               {this.renderButton("Save")}
             </form>
             {videoId && <Videoplayer videoId={videoId} />}
