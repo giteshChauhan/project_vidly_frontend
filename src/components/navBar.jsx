@@ -174,17 +174,28 @@ function Navbar({ user }) {
               data-bs-toggle="dropdown"
               alt="Me"
             />
-            <ul className="dropdown-menu">
+            <ul className="dropdown-menu myModal">
               <li>
-                <Link className="dropdown-item" to={handleUser()[0].path}>
+                <Link
+                  className="dropdown-item"
+                  to={handleUser()[0].path}
+                  style={{ color: "white" }}
+                >
                   {handleUser()[0].title}
                 </Link>
               </li>
               <li>
-                <hr className="dropdown-divider text-white-50" />
+                <hr
+                  className="dropdown-divider text-white-50"
+                  style={{ backgroundColor: "#6e00ff" }}
+                />
               </li>
               <li>
-                <Link className="dropdown-item" to={handleUser()[1].path}>
+                <Link
+                  className="dropdown-item"
+                  to={handleUser()[1].path}
+                  style={{ color: "white" }}
+                >
                   {handleUser()[1].title}
                 </Link>
               </li>
