@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
-import NavBar from "./components/navBar";
-import Movies from "./components/movies";
+import PrivateRoutes from "./components/common/privateRoutes";
+import RegisterForm from "./components/registerForm";
 import Customers from "./components/customers";
-import Rentals from "./components/rentals";
-import NotFound from "./components/notFound";
 import MovieForm from "./components/movieForm";
 import LoginForm from "./components/loginForm";
-import RegisterForm from "./components/registerForm";
-import PrivateRoutes from "./components/common/privateRoutes";
+import NotFound from "./components/notFound";
+import Rentals from "./components/rentals";
+import NavBar from "./components/navBar";
 import Logout from "./components/logout";
 import Footer from "./components/footer";
 import Genres from "./components/genres";
+import Movies from "./components/movies";
+import Banner from "./components/banner";
+
 import auth from "./services/authService";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -22,6 +24,7 @@ import "./css/AppResponsiveWidth.css";
 import "./css/AppResponsiveHeight.css";
 
 function App() {
+  const { pathname } = useLocation();
   const [user, setUser] = useState();
 
   useEffect(() => {
@@ -33,6 +36,7 @@ function App() {
     <>
       <ToastContainer />
       <NavBar user={user} />
+      {pathname === "/movies" && <Banner />}
       <main className="container">
         <Routes>
           <Route path="/register" element={<RegisterForm />} />
