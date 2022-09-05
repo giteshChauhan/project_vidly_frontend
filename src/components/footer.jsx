@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import CopyRight from "./common/copyright";
 import logo from "../icons/PVBW150.png";
 
 const Footer = () => {
@@ -13,23 +14,7 @@ const Footer = () => {
             >
               <img src={logo} alt="VIDLY" />
             </Link>
-            <ul className="list-unstyled small text-muted">
-              <li className="mb-3" style={{ color: "white" }}>
-                Currently <i>Beta</i> Version
-              </li>
-              <li className="mb-2" style={{ color: "white" }}>
-                &copy;{" "}
-                <a
-                  href="https://www.linkedin.com/in/giteshchauhan20/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="a-design myFont"
-                >
-                  giteshChauhan
-                </a>{" "}
-                2022
-              </li>
-            </ul>
+            <CopyRight />
           </div>
           <div className="col-6 col-lg-2 offset-lg-1 mb-3">
             <h5>Links</h5>
