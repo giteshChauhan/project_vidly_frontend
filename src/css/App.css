@@ -1,9 +1,140 @@
+:root{
+  --bs-body-bg-rgb: 255,255,255;
+  --bs-primary-rgb: 13,110,253;
+  --bd-accent-rgb: 110,0,255;
+  --bd-violet-rgb: 112.520718,44.062154,249.437846;
+  --bd-pink-rgb: 214,51,132;
+}
+
+@keyframes rise {
+  0%{
+    transform: translateY(-20px);
+  }
+}
+
+
+.myBanner{
+  padding: 5rem 0px;
+  margin-top: -50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;}
+
+.myBannerIcon{
+  height: 128px;
+  width: 128px;
+  animation: 2s ease-in-out 1s 1 rise;
+}
+
+.myBannerTitle{
+  color: white;
+  text-shadow: 0 0 5px #6e00ff;
+}
+
+.myBannerText{
+  margin-top: 3rem;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.myBannerBtn{
+  background-color: #6e00ff;
+  color: white;
+  font-size: larger;
+  font-weight: bold;
+  padding: .4rem 1rem;
+  box-shadow: 0 0 2px 2px #6e00ff;
+  border-radius: 10px;
+  border-color: transparent;
+}
+
+.myBannerBtn:hover{
+  color: #495057;
+  box-shadow: 0 0 3px 3px #6e00ff;
+}
+
 .offcanvas-lg{
   max-width: 70% !important;
 }
 
+#moviesFilterDropdown{
+  display: none;
+}
+
+td,th{
+  color: white !important;
+}
+
+table{
+  border-color:#181818 !important;
+}
+
+.form-control, .form-select{
+  background-color: #181818 !important;
+  color: white !important;
+  border: 1px solid #6e00ff !important;
+}
+
+#myListItem{
+  color: white;
+  background-color: #181818;
+  text-decoration: none;
+}
+
+#myListItem:hover{
+  cursor: pointer;
+}
+
+.myListItemActive{
+  background-color: #6e00ff;
+  box-shadow: 0 0 1px 1px #6e00ff;
+}
+
+#myDropdownMenu{
+  transform: translate3d(100.8px,30.4px,0px) !important;
+  background-color: #181818;
+  border: 1px solid #6e00ff;
+  box-shadow: 0 0 1px 1px #6e00ff;
+}
+
+#mySearchBox{
+  background-color: #181818;
+  border-color: #6e00ff;
+  color: white;
+}
+
+#mySearchBox:hover{
+  box-shadow: 0 0 1px 1px #6e00ff;
+  cursor: text;
+}
+
+.myListGroupDropdown{
+  padding: 7px;
+  box-shadow: 0 0 1px 1px #6e00ff;
+  color: #6e00ff;
+}
+
+.myListGroupDropdown:hover{
+  box-shadow: 0 0 2px 2px #6e00ff;
+}
+
+#myListGroupDropdownMenu{
+  transform: translate3d(62.8px,43.4px,0px) !important;
+  width: 100%;
+  background-color: #181818;
+  border: 1px solid #6e00ff;
+  box-shadow: 0 0 1px 1px #6e00ff;
+}
+
+.myDropdownBtn{
+  color: #6e00ff;
+  padding: 1px 30px !important;
+}
+
 .dropdown-menu{
   min-width: 100px !important;
+  background-color: #181818 !important;
 }
 
 .dropdown-menu.show{
@@ -24,7 +155,7 @@
 
 .a-design{
   text-decoration: none;
-  color: #495057;
+  color: #a1aebb;
 }
 
 
@@ -35,6 +166,19 @@
 
 .myBtn:hover{
   border-radius: 8px;
+}
+
+.myCloseBtn{
+  background-color: black;
+  color: white;
+  border: 1px solid #6e00ff;
+  border-radius: 4px;
+  padding: 3px 10px;
+}
+
+.myCloseBtn:hover{
+  box-shadow: 0 0 1px 1px #6e00ff;
+  color: #a1aebb;
 }
 
 .myImg{
@@ -93,11 +237,17 @@
 }
 
 .myModal{
-      background-color: white;
+      background-color: #181818;
       border: 1px solid #6e00ff;
       border-radius: 10px;
-      box-shadow: 0 0 4px 4px #e2dada;
+      box-shadow: 0 0 1px 1px #6e00ff;
       padding: 4px;
+}
+
+.myListModal{
+  border-top: solid 2px #6e00ff;
+  border-right: solid 2px #6e00ff;
+  border-radius: 10px;
 }
 
 .myTitle{
@@ -138,4 +288,34 @@
 
 .myPlot{
   width: 60rem;
+}
+
+.myPagination{
+  display: flex;
+  list-style-type: none;
+}
+
+.myListBox{
+  border: 1px solid #6e00ff;
+  padding: 3px 12px;
+  border-radius: 2px;
+}
+
+.myListBox:hover{
+  background-color: #6e00ff;
+  box-shadow: 0 0 2px 2px #6e00ff;
+}
+
+.myPageLink{
+  text-decoration: none;
+  color: white;
+}
+
+.myPageLink:hover{
+  color: white;
+}
+
+.bd-footer{
+  border-top: 1px solid #6e00ff;
+  border-radius: 5px;
 }
