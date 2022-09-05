@@ -1,23 +1,38 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import _ from "lodash";
+
 import { deleteMovie, getMovies } from "../services/movieService";
 import { getGenres } from "../services/genreService";
+import { getContentType } from "../services/contentTypeService";
+import { getCinema } from "../services/cinemaService";
 // import auth from "../services/authService";
-import Pagination from "./common/pagination";
 import { paginate } from "../utils/paginate";
-import ListGroup from "./common/listGroup";
-import MoviesTable from "./moviesTable";
+
 import SearchBox from "./common/searchBox";
-import _ from "lodash";
+import Pagination from "./common/pagination";
+import ListGroup from "./common/listGroup";
+import Dropdown from "./common/dropdown";
+import MoviesTable from "./moviesTable";
 
 class Movies extends Component {
   state = {
     movies: [],
     genres: [],
-    pageSize: 4,
+    contentType: [],
+    cinema: [],
+    queries: [
+      { name: "By title", _id: 0 },
+      { name: "By rating", _id: 1 },
+      { name: "By year", _id: 2 },
+    ],
+    pageSize: 8,
     currentPage: 1,
-    selectedGenre: null,
+    selectedGenre: { name: "All Genres" },
+    selectedContent: { name: "All Content" },
+    selectedCinema: { name: "All Cinema" },
+    selectedQuery: { name: "By title" },
     searchQuery: "",
     sortColumn: { path: "title", order: "asc" },
   };
@@ -27,7 +42,11 @@ class Movies extends Component {
     const { data } = await getGenres();
     const genres = [{ name: "All Genres", _id: 0 }, ...data];
     const { data: movies } = await getMovies();
-    this.setState({ movies, genres });
+    const { data: c } = await getCinema();
+    const cinema = [{ name: "All Cinema", _id: 0 }, ...c];
+    const { data: ct } = await getContentType();
+    const contentType = [{ name: "All Content", _id: 0 }, ...ct];
+    this.setState({ movies, genres, cinema, contentType });
   }
 
   handleDelete = async (movie) => {
@@ -52,12 +71,28 @@ class Movies extends Component {
     this.setState({ selectedGenre: genre, searchQuery: "", currentPage: 1 });
   };
 
+  handleContentSelect = (content) => {
+    this.setState({
+      selectedContent: content,
+      searchQuery: "",
+      currentPage: 1,
+    });
+  };
+
+  handleCinemaSelect = (cinema) => {
+    this.setState({ selectedCinema: cinema, searchQuery: "", currentPage: 1 });
+  };
+
+  handleQuerySelect = (query) => {
+    this.setState({ selectedQuery: query, searchQuery: "", currentPage: 1 });
+  };
+
   handleSort = (sortColumn) => {
     this.setState({ sortColumn });
   };
 
   handleSearch = (query) => {
-    this.setState({ selectedGenre: null, searchQuery: query, currentPage: 1 });
+    this.setState({ searchQuery: query, currentPage: 1 });
   };
 
   handleAddMovie = (movie) => {
@@ -72,17 +107,32 @@ class Movies extends Component {
       currentPage,
       movies: allMovies,
       selectedGenre,
+      selectedCinema,
+      selectedContent,
+      selectedQuery,
       searchQuery,
       sortColumn,
     } = this.state;
 
     let filtered = allMovies;
-    if (searchQuery)
-      filtered = allMovies.filter((m) =>
+    let queryTitle = selectedQuery.name;
+
+    if (searchQuery && queryTitle === "By title")
+      filtered = filtered.filter((m) =>
         m.title.toLowerCase().startsWith(searchQuery.toLowerCase())
       );
-    else if (selectedGenre && selectedGenre._id)
-      filtered = allMovies.filter((m) => m.genre._id === selectedGenre._id);
+    if (searchQuery && queryTitle === "By rating")
+      filtered = filtered.filter((m) => m.rating === parseFloat(searchQuery));
+    if (searchQuery && queryTitle === "By year")
+      filtered = filtered.filter((m) => m.year === parseInt(searchQuery));
+    if (selectedGenre && selectedGenre._id)
+      filtered = filtered.filter((m) => m.genre._id === selectedGenre._id);
+    if (selectedContent && selectedContent._id)
+      filtered = filtered.filter(
+        (m) => m.contentType._id === selectedContent._id
+      );
+    if (selectedCinema && selectedCinema._id)
+      filtered = filtered.filter((m) => m.cinema._id === selectedCinema._id);
 
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
 
@@ -96,7 +146,13 @@ class Movies extends Component {
       pageSize,
       currentPage,
       genres,
+      cinema,
+      contentType,
+      queries,
       selectedGenre,
+      selectedCinema,
+      selectedContent,
+      selectedQuery,
       sortColumn,
       searchQuery,
     } = this.state;
@@ -105,22 +161,45 @@ class Movies extends Component {
     const { totalCount, data: movies } = this.getPagedData();
 
     return (
-      <div className="row">
-        <div className="col-2">
-          <ListGroup
-            items={genres}
-            selectedItem={selectedGenre}
-            onItemSelect={this.handleGenreSelect}
-          />
-          {user && user.isAdmin && (
-            <Link
-              className="btn btn-primary"
-              style={{ marginTop: "10px", background: "#6e00ff" }}
-              to={"/genres"}
-            >
-              Edit Genres
-            </Link>
-          )}
+      <div className="row myListModal">
+        <div
+          className="col-2"
+          style={{ marginRight: "5px" }}
+          id="moviesFilterListGroup"
+        >
+          <h6 style={{ color: "rgb(130 142 153)", marginLeft: "30px" }}>
+            Filter By :
+          </h6>
+          <div className="m-2 myListModal">
+            <ListGroup
+              items={genres}
+              selectedItem={selectedGenre}
+              onItemSelect={this.handleGenreSelect}
+            />
+            {user && user.isAdmin && (
+              <Link
+                className="btn btn-primary"
+                style={{ margin: "5px 0px", background: "#6e00ff" }}
+                to={"/genres"}
+              >
+                Edit Genres
+              </Link>
+            )}
+          </div>
+          <div className="m-2 myListModal">
+            <ListGroup
+              items={contentType}
+              selectedItem={selectedContent}
+              onItemSelect={this.handleContentSelect}
+            />
+          </div>
+          <div className="m-2 myListModal">
+            <ListGroup
+              items={cinema}
+              selectedItem={selectedCinema}
+              onItemSelect={this.handleCinemaSelect}
+            />
+          </div>
         </div>
         <div className="col">
           {user && user.isAdmin && (
@@ -132,8 +211,40 @@ class Movies extends Component {
               New Movie
             </Link>
           )}
+          <div className="myModal" id="moviesFilterDropdown">
+            <h6
+              style={{ color: "rgb(130 142 153)", marginTop: "2px" }}
+              id="myFilterBy"
+            >
+              Filter By :
+            </h6>
+            <Dropdown
+              items={genres}
+              selectedItem={selectedGenre}
+              onItemSelect={this.handleGenreSelect}
+            />
+            <Dropdown
+              items={contentType}
+              selectedItem={selectedContent}
+              onItemSelect={this.handleContentSelect}
+            />
+            <Dropdown
+              items={cinema}
+              selectedItem={selectedCinema}
+              onItemSelect={this.handleCinemaSelect}
+            />
+          </div>
           <p>Showing {totalCount} Top Tier Movies.</p>
-          <SearchBox value={searchQuery} onChange={this.handleSearch} />
+          <div className="input-group">
+            <SearchBox value={searchQuery} onChange={this.handleSearch} />
+            <Dropdown
+              items={queries}
+              selectedItem={selectedQuery}
+              onItemSelect={this.handleQuerySelect}
+              btnClass={"dropdown-toggle myListGroupDropdown"}
+              dropdownMenuId={"myListGroupDropdownMenu"}
+            />
+          </div>
           <MoviesTable
             movies={movies}
             sortColumn={sortColumn}
