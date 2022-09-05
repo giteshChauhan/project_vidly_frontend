@@ -6,6 +6,13 @@
   
   @media screen and (max-width: 992px){
     #bdSidebar {display: none;}
+    #moviesFilterListGroup{display: none;}
+    #moviesFilterDropdown{
+      display: flex;
+      margin-bottom: 10px;
+      flex-direction: row;
+      justify-content: space-around;
+    }
     .break { display: block; flex-basis: 100%}
     .my-modal-body{
       overflow-y: auto !important;
@@ -25,8 +32,26 @@
   @media screen and (max-width: 768px){
     .col-2 {width: 66.666667% !important;margin-bottom: 20px;}
     #bdSidebar {display: none;}  
+    .myDropdownBtn{
+      padding: 1px 15px !important;
+    }
     .myPlot{
       width: 20rem;
+    }
+    .myBannerText{
+      font-size: 1rem;
+    }
+  }
+
+  @media screen and (max-width: 477px) {
+    .myDropdownBtn{
+      padding: 1px 5px !important;
+    }
+    #myFilterBy{
+      display: none;
+    }
+    .myBr{
+      display: none;
     }
   }
   
