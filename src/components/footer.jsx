@@ -3,7 +3,7 @@ import logo from "../icons/PVBW150.png";
 
 const Footer = () => {
   return (
-    <footer className="bd-footer py-4 py-md-5 mt-5 bg-light">
+    <footer className="bd-footer py-4 py-md-5 mt-5">
       <div className="container py-4 py-md-5 px-4 px-md-3 mb-4">
         <div className="row">
           <div className="col-lg-3 mb-3">
@@ -14,10 +14,10 @@ const Footer = () => {
               <img src={logo} alt="VIDLY" />
             </Link>
             <ul className="list-unstyled small text-muted">
-              <li className="mb-3">
+              <li className="mb-3" style={{ color: "white" }}>
                 Currently <i>Beta</i> Version
               </li>
-              <li className="mb-2">
+              <li className="mb-2" style={{ color: "white" }}>
                 &copy;{" "}
                 <a
                   href="https://www.linkedin.com/in/giteshchauhan20/"
