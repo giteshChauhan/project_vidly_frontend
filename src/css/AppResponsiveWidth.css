@@ -9,7 +9,7 @@
     #moviesFilterListGroup{display: none;}
     #moviesFilterDropdown{
       display: flex;
-      margin-bottom: 10px;
+      margin: 10px 0px;
       flex-direction: row;
       justify-content: space-around;
     }
@@ -57,4 +57,7 @@
   
   @media screen and (max-width: 401px){
     .myImg {height: 20px}
+    #myDropdownMenu{
+      transform: translate3d(80.8px,30.4px,0px) !important;
+    }
   }
