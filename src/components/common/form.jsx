@@ -48,6 +48,18 @@ class Form extends Component {
     this.setState({ data, errors });
   };
 
+  renderButtonMaxWidth(label) {
+    return (
+      <button
+        disabled={this.validate()}
+        className="btn btn-primary"
+        style={{ marginTop: "25px", background: "#6e00ff", width: "100%" }}
+      >
+        {label}
+      </button>
+    );
+  }
+
   renderButton(label) {
     return (
       <button
