@@ -66,7 +66,7 @@ function App() {
           </Route>
         </Routes>
       </main>
-      <Footer />
+      {pathname === "/login" || pathname === "/register" ? null : <Footer />}
     </>
   );
 }
