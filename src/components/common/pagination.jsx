@@ -11,14 +11,18 @@ const Pagination = (props) => {
 
   return (
     <nav>
-      <ul className="pagination">
+      <ul className="myPagination">
         {pages.map((page) => (
           <li
             key={page}
-            className={page === currentPage ? "page-item active" : "page-item"}
+            className={
+              page === currentPage
+                ? "myListItem myListBox myListItemActive"
+                : "myListItem myListBox"
+            }
           >
             <a
-              className="page-link"
+              className="myPageLink"
               onClick={() => props.onPageChange(page)}
               href={"#" + currentPage}
             >
