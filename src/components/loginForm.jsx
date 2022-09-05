@@ -1,5 +1,8 @@
 import Joi from "joi-browser";
+
+import SmallFooter from "./smallFooter";
 import Form from "./common/form";
+
 import auth from "./../services/authService";
 
 class LoginForm extends Form {
@@ -33,14 +36,17 @@ class LoginForm extends Form {
 
   render() {
     return (
-      <div>
-        <h1>Login</h1>
-        <form onSubmit={this.handleSubmit}>
-          {this.renderInput("username", "Username", "text", true)}
-          {this.renderInput("password", "Password", "password")}
-          {this.renderButton("Login")}
-        </form>
-      </div>
+      <>
+        <div className="myBox">
+          <h1 style={{ marginBottom: "2rem" }}>Login</h1>
+          <form onSubmit={this.handleSubmit}>
+            {this.renderInput("username", "Username", "text", true)}
+            {this.renderInput("password", "Password", "password")}
+            {this.renderButtonMaxWidth("Login")}
+          </form>
+        </div>
+        <SmallFooter />
+      </>
     );
   }
 }
