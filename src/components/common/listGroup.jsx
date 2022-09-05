@@ -5,13 +5,13 @@ const ListGroup = (props) => {
     props;
 
   return (
-    <ul className="list-group">
+    <ul className="list-group mb-3">
       {items.map((item) => (
         <li
           key={item[valueProperty]}
-          className={
-            item === selectedItem ? "list-group-item active" : "list-group-item"
-          }
+          className="list-group-item"
+          id="myListItem"
+          style={item === selectedItem ? { color: "#6e00ff" } : null}
           onClick={() => {
             onItemSelect(item);
           }}
