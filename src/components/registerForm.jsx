@@ -1,5 +1,8 @@
-import Form from "./common/form";
 import Joi from "joi-browser";
+
+import SmallFooter from "./smallFooter";
+import Form from "./common/form";
+
 import { register } from "./../services/userService";
 import auth from "./../services/authService";
 
@@ -35,15 +38,18 @@ class RegisterForm extends Form {
 
   render() {
     return (
-      <div>
-        <h1>Register</h1>
-        <form onSubmit={this.handleSubmit}>
-          {this.renderInput("username", "Username", "text", true)}
-          {this.renderInput("password", "Password", "password")}
-          {this.renderInput("name", "Name")}
-          {this.renderButton("Register")}
-        </form>
-      </div>
+      <>
+        <div className="myBox">
+          <h1 style={{ marginBottom: "2rem" }}>Register</h1>
+          <form onSubmit={this.handleSubmit}>
+            {this.renderInput("username", "Username", "text", true)}
+            {this.renderInput("password", "Password", "password")}
+            {this.renderInput("name", "Name")}
+            {this.renderButtonMaxWidth("Register")}
+          </form>
+        </div>
+        <SmallFooter />
+      </>
     );
   }
 }
