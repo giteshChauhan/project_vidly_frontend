@@ -176,15 +176,6 @@ class Movies extends Component {
               selectedItem={selectedGenre}
               onItemSelect={this.handleGenreSelect}
             />
-            {user && user.isAdmin && (
-              <Link
-                className="btn btn-primary"
-                style={{ margin: "5px 0px", background: "#6e00ff" }}
-                to={"/genres"}
-              >
-                Edit Genres
-              </Link>
-            )}
           </div>
           <div className="m-2 myListModal">
             <ListGroup
@@ -205,10 +196,19 @@ class Movies extends Component {
           {user && user.isAdmin && (
             <Link
               className="btn btn-primary"
-              style={{ marginBottom: "10px", background: "#6e00ff" }}
+              style={{ marginRight: "15px", background: "#6e00ff" }}
               to={"/movies/new"}
             >
               New Movie
+            </Link>
+          )}
+          {user && user.isAdmin && (
+            <Link
+              className="btn btn-primary"
+              style={{ margin: "5px 0px", background: "#6e00ff" }}
+              to={"/genres"}
+            >
+              Edit Genres
             </Link>
           )}
           <div className="myModal" id="moviesFilterDropdown">
