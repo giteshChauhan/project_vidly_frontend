@@ -287,12 +287,16 @@ table{
   margin: 0px 5px;
 }
 
+#videoModalHeaderResponsive{
+  display: none;
+}
+
 .my-modal-body{
   flex: 1 1 auto;
   padding: var(--bs-modal-padding);
   position: relative;
   overflow-y: auto;
-  height: 580px;
+  height: 570px;
 }
 
 .divider{
