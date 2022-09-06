@@ -19,6 +19,7 @@ class MovieFormComponent extends Form {
   state = {
     data: {
       title: "",
+      thumbnailUrl: "",
       genreId: "",
       year: "",
       rating: "",
@@ -42,6 +43,7 @@ class MovieFormComponent extends Form {
   schema = {
     _id: Joi.string(),
     title: Joi.string().required().label("Title"),
+    thumbnailUrl: Joi.string().required().label("Thumbanil Url"),
     genreId: Joi.string().required().label("Genre"),
     year: Joi.number().required().min(1950).max(2024).label("Year"),
     rating: Joi.number().required().min(0).max(10).label("IMDb"),
@@ -89,6 +91,7 @@ class MovieFormComponent extends Form {
   mapToViewModel(movie) {
     return {
       title: movie.title,
+      thumbnailUrl: movie.thumbnailUrl,
       genreId: movie.genre._id,
       year: movie.year,
       rating: movie.rating,
@@ -154,6 +157,7 @@ class MovieFormComponent extends Form {
             <h3>Movie Form</h3>
             <form onSubmit={this.handleSubmit}>
               {this.renderInput("title", "Title")}
+              {this.renderInput("thumbnailUrl", "Thumbnail Url")}
               {this.renderSelect("genreId", "Genre", genres)}
               {this.renderSelect("contentTypeId", "ContentType", contentType)}
               {this.renderSelect("cinemaId", "Cinema", cinema)}
