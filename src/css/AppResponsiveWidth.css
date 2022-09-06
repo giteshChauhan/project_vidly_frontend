@@ -43,7 +43,16 @@
   
   @media screen and (max-width: 768px){
     .col-2 {width: 66.666667% !important;margin-bottom: 20px;}
-    #bdSidebar {display: none;}  
+    #bdSidebar {display: none;}
+    #videoModalHeader{
+      display: none;
+    }
+    #videoModalHeaderResponsive{
+      display: flex;
+      margin-top: 10px;
+      align-items: center;
+      justify-content: center;
+    }
     .myDropdownBtn{
       padding: 1px 15px !important;
     }
