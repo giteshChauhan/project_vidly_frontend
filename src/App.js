@@ -13,7 +13,7 @@ import NavBar from "./components/navBar";
 import Logout from "./components/logout";
 import Footer from "./components/footer";
 import Genres from "./components/genres";
-import Movies from "./components/movies";
+import MoviesSpinner from "./components/hoc/moviesSpinner";
 import Banner from "./components/banner";
 
 import auth from "./services/authService";
@@ -41,7 +41,7 @@ function App() {
         <Routes>
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/login" element={<LoginForm />}></Route>
-          <Route path="/movies" element={<Movies user={user} />}></Route>
+          <Route path="/movies" element={<MoviesSpinner />}></Route>
           <Route path="/not-found" element={<NotFound />}></Route>
           <Route
             path="/"
