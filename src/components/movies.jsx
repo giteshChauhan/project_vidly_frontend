@@ -3,11 +3,9 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import _ from "lodash";
 
-import { deleteMovie, getMovies } from "../services/movieService";
-import { getGenres } from "../services/genreService";
-import { getContentType } from "../services/contentTypeService";
-import { getCinema } from "../services/cinemaService";
-// import auth from "../services/authService";
+import { deleteMovie } from "../services/movieService";
+
+import auth from "../services/authService";
 import { paginate } from "../utils/paginate";
 
 import SearchBox from "./common/searchBox";
@@ -15,6 +13,8 @@ import Pagination from "./common/pagination";
 import ListGroup from "./common/listGroup";
 import Dropdown from "./common/dropdown";
 import MoviesTable from "./moviesTable";
+
+const user = auth.getCurrentUser();
 
 class Movies extends Component {
   state = {
@@ -37,15 +37,9 @@ class Movies extends Component {
     sortColumn: { path: "title", order: "asc" },
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     document.title = "VIDLY | Home";
-    const { data } = await getGenres();
-    const genres = [{ name: "All Genres", _id: 0 }, ...data];
-    const { data: movies } = await getMovies();
-    const { data: c } = await getCinema();
-    const cinema = [{ name: "All Cinema", _id: 0 }, ...c];
-    const { data: ct } = await getContentType();
-    const contentType = [{ name: "All Content", _id: 0 }, ...ct];
+    const { movies, genres, cinema, contentType } = this.props;
     this.setState({ movies, genres, cinema, contentType });
   }
 
@@ -156,7 +150,6 @@ class Movies extends Component {
       sortColumn,
       searchQuery,
     } = this.state;
-    const { user } = this.props;
 
     const { totalCount, data: movies } = this.getPagedData();
 
