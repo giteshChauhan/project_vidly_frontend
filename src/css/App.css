@@ -75,6 +75,13 @@
   display: none;
 }
 
+.mySpinner{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5rem 0px;
+}
+
 td,th{
   color: white !important;
 }
