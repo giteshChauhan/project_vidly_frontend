@@ -5,13 +5,13 @@ import axios from "axios";
 
 import { getCurrentUser } from "../services/authService";
 import Videoplayer from "./common/videoPlayer";
+import Header from "./common/header";
 
 import views_icon from "../icons/views_icon.png";
 import upvotes_icon from "../icons/upvotes_icon.png";
 import add_disable from "../icons/add_disable.png";
 import add_enable from "../icons/add_enable.png";
 import ticket_icon from "../icons/ticket_icon.png";
-import chill_icon from "../icons/chill_icon.png";
 
 const VideoModal = ({ isOpen, onClose, movie }) => {
   let title, ytId, imdbId, contentType;
@@ -79,15 +79,7 @@ const VideoModal = ({ isOpen, onClose, movie }) => {
             >
               {title} : {contentType}
             </h6>
-            <div className="myModal myModalFlex">
-              <img src={chill_icon} alt="chill" className="myImg" />
-              <h6
-                className="modal-title "
-                style={{ color: "#6e00ff", marginLeft: "4px" }}
-              >
-                Enjoy add-free content
-              </h6>
-            </div>
+            <Header id={"videoModalHeader"} />
             <div className="divider"></div>
             <button
               type="button"
@@ -100,7 +92,9 @@ const VideoModal = ({ isOpen, onClose, movie }) => {
               X
             </button>
           </div>
+
           <div className="my-modal-body">
+            <Header id={"videoModalHeaderResponsive"} />
             <div className="videoPlayerModal">
               {ytId !== "" && <Videoplayer videoId={ytId} />}
             </div>
