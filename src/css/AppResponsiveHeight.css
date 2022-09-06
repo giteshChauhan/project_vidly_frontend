@@ -1,26 +1,26 @@
 @media screen and (max-height: 750px) {
     .my-modal-body{
-      height:450px;
+      height:440px;
     }
   }
   
   @media screen and (max-height: 620px) {
     .my-modal-body{
-      height:350px;
+      height:340px;
     }
   }
   @media screen and (max-height: 520px) {
     .my-modal-body{
-      height:250px;
+      height:240px;
     }
   }
   @media screen and (max-height: 420px) {
     .my-modal-body{
-      height:150px;
+      height:140px;
     }
   }
   @media screen and (max-height: 320px) {
     .my-modal-body{
-      height:100px;
+      height:90px;
     }
   }
