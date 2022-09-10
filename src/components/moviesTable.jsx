@@ -6,7 +6,6 @@ import auth from "../services/authService";
 
 import ConfirmModal from "./common/confirmModal";
 import Table from "./common/table";
-import VideoModal from "./videoModal";
 
 import add_enable from "../icons/add_enable.png";
 import add_disable from "../icons/add_disable.png";
@@ -23,17 +22,13 @@ class MoviesTable extends Component {
       confirmText: "",
       data: {},
     },
-    videoModal: {
-      isOpen: false,
-      movie: {},
-    },
   };
   columns = [
     {
       path: "title",
       label: "Title",
       content: (movie) => (
-        <div className="myTitle" onClick={() => this.handleVideoModal(movie)}>
+        <div className="myTitle" onClick={() => this.props.onVideo(movie)}>
           {movie.title}
         </div>
       ),
@@ -136,26 +131,10 @@ class MoviesTable extends Component {
     this.setState({ confirmModal });
   };
 
-  handleClose = () => {
-    const videoModal = {
-      isOpen: false,
-    };
-    this.setState({ videoModal });
-  };
-
-  handleVideoModal = (movie) => {
-    const videoModal = {
-      isOpen: true,
-      movie,
-    };
-    this.setState({ videoModal });
-  };
-
   render() {
     const { movies, onSort, sortColumn } = this.props;
     const { title, isOpen, body, confirmStyle, confirmText, data } =
       this.state.confirmModal;
-    const { isOpen: openVideo, movie } = this.state.videoModal;
 
     return (
       <>
@@ -173,11 +152,6 @@ class MoviesTable extends Component {
           confirmText={confirmText}
           onConfirm={() => this.props.onDelete(data)}
           onCloseModal={this.handleCloseModal}
-        />
-        <VideoModal
-          isOpen={openVideo}
-          onClose={this.handleClose}
-          movie={movie}
         />
       </>
     );
