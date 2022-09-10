@@ -14,7 +14,6 @@ const Movie = ({ data }) => {
         style={{
           width: "18rem",
           margin: "3px",
-          boxShadow: "0 0  1px 1px #6e00ff",
         }}
         key={id}
       >
