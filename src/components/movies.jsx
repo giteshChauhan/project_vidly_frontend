@@ -12,16 +12,26 @@ import SearchBox from "./common/searchBox";
 import Pagination from "./common/pagination";
 import ListGroup from "./common/listGroup";
 import Dropdown from "./common/dropdown";
+import MoviesCardView from "./moviesCardView";
 import MoviesTable from "./moviesTable";
+import VideoModal from "./videoModal";
+
+import listview_icon from "../icons/listview_icon.png";
+import cardview_icon from "../icons/cardview_icon.png";
 
 const user = auth.getCurrentUser();
 
 class Movies extends Component {
   state = {
+    isList: false,
     movies: [],
     genres: [],
     contentType: [],
     cinema: [],
+    videoModal: {
+      isOpen: false,
+      movie: {},
+    },
     queries: [
       { name: "By title", _id: 0 },
       { name: "By rating", _id: 1 },
@@ -95,6 +105,21 @@ class Movies extends Component {
     toast.info(`Added ${movie.title}`);
   };
 
+  handleVideoModal = (movie) => {
+    const videoModal = {
+      isOpen: true,
+      movie,
+    };
+    this.setState({ videoModal });
+  };
+
+  handleClose = () => {
+    const videoModal = {
+      isOpen: false,
+    };
+    this.setState({ videoModal });
+  };
+
   getPagedData = () => {
     const {
       pageSize,
@@ -137,6 +162,7 @@ class Movies extends Component {
 
   render() {
     const {
+      isList,
       pageSize,
       currentPage,
       genres,
@@ -152,40 +178,35 @@ class Movies extends Component {
     } = this.state;
 
     const { totalCount, data: movies } = this.getPagedData();
+    const { isOpen: openVideo, movie } = this.state.videoModal;
 
     return (
-      <div className="row myListModal">
-        <div
-          className="col-2"
-          style={{ marginRight: "5px" }}
-          id="moviesFilterListGroup"
-        >
-          <h6 style={{ color: "rgb(130 142 153)", marginLeft: "30px" }}>
-            Filter By :
-          </h6>
-          <div className="m-2 myListModal">
-            <ListGroup
-              items={genres}
-              selectedItem={selectedGenre}
-              onItemSelect={this.handleGenreSelect}
-            />
-          </div>
-          <div className="m-2 myListModal">
-            <ListGroup
-              items={contentType}
-              selectedItem={selectedContent}
-              onItemSelect={this.handleContentSelect}
-            />
-          </div>
-          <div className="m-2 myListModal">
-            <ListGroup
-              items={cinema}
-              selectedItem={selectedCinema}
-              onItemSelect={this.handleCinemaSelect}
-            />
-          </div>
+      <>
+        <div className="input-group" id="moviesInputGroup">
+          <SearchBox value={searchQuery} onChange={this.handleSearch} />
+          <Dropdown
+            items={queries}
+            selectedItem={selectedQuery}
+            onItemSelect={this.handleQuerySelect}
+            btnClass={"dropdown-toggle myListGroupDropdown"}
+            dropdownMenuId={"myListGroupDropdownMenu"}
+          />
+          <img
+            className="myImg"
+            style={{ margin: "0 6px ", height: "47px" }}
+            alt="card"
+            onClick={() => this.setState({ isList: false })}
+            src={cardview_icon}
+          />
+          <img
+            className="myImg"
+            style={{ height: "42px" }}
+            alt="list"
+            src={listview_icon}
+            onClick={() => this.setState({ isList: true })}
+          />
         </div>
-        <div className="col">
+        <div>
           {user && user.isAdmin && (
             <Link
               className="btn btn-primary"
@@ -204,55 +225,121 @@ class Movies extends Component {
               Edit Genres
             </Link>
           )}
-          <div className="myModal" id="moviesFilterDropdown">
-            <h6
-              style={{ color: "rgb(130 142 153)", marginTop: "2px" }}
-              id="myFilterBy"
-            >
-              Filter By :
-            </h6>
-            <Dropdown
-              items={genres}
-              selectedItem={selectedGenre}
-              onItemSelect={this.handleGenreSelect}
-            />
-            <Dropdown
-              items={contentType}
-              selectedItem={selectedContent}
-              onItemSelect={this.handleContentSelect}
-            />
-            <Dropdown
-              items={cinema}
-              selectedItem={selectedCinema}
-              onItemSelect={this.handleCinemaSelect}
-            />
-          </div>
-          <p>Showing {totalCount} Top Tier Movies.</p>
-          <div className="input-group">
-            <SearchBox value={searchQuery} onChange={this.handleSearch} />
-            <Dropdown
-              items={queries}
-              selectedItem={selectedQuery}
-              onItemSelect={this.handleQuerySelect}
-              btnClass={"dropdown-toggle myListGroupDropdown"}
-              dropdownMenuId={"myListGroupDropdownMenu"}
-            />
-          </div>
-          <MoviesTable
-            movies={movies}
-            sortColumn={sortColumn}
-            onDelete={this.handleDelete}
-            onSort={this.handleSort}
-            onAdd={this.handleAddMovie}
-          />
-          <Pagination
-            itemsCount={totalCount}
-            pageSize={pageSize}
-            currentPage={currentPage}
-            onPageChange={this.handlePageChange}
-          />
         </div>
-      </div>
+        {isList ? (
+          <div className="row">
+            <div
+              className="col-2"
+              style={{ marginRight: "5px" }}
+              id="moviesFilterListGroup"
+            >
+              <h6 style={{ color: "rgb(130 142 153)", marginLeft: "30px" }}>
+                Filter By :
+              </h6>
+              <div className="m-2 myListModal">
+                <ListGroup
+                  items={genres}
+                  selectedItem={selectedGenre}
+                  onItemSelect={this.handleGenreSelect}
+                />
+              </div>
+              <div className="m-2 myListModal">
+                <ListGroup
+                  items={contentType}
+                  selectedItem={selectedContent}
+                  onItemSelect={this.handleContentSelect}
+                />
+              </div>
+              <div className="m-2 myListModal">
+                <ListGroup
+                  items={cinema}
+                  selectedItem={selectedCinema}
+                  onItemSelect={this.handleCinemaSelect}
+                />
+              </div>
+            </div>
+            <div className="col">
+              <div className="myModal" id="moviesFilterDropdown">
+                <h6
+                  style={{ color: "rgb(130 142 153)", marginTop: "2px" }}
+                  id="myFilterBy"
+                >
+                  Filter By :
+                </h6>
+                <Dropdown
+                  items={genres}
+                  selectedItem={selectedGenre}
+                  onItemSelect={this.handleGenreSelect}
+                />
+                <Dropdown
+                  items={contentType}
+                  selectedItem={selectedContent}
+                  onItemSelect={this.handleContentSelect}
+                />
+                <Dropdown
+                  items={cinema}
+                  selectedItem={selectedCinema}
+                  onItemSelect={this.handleCinemaSelect}
+                />
+              </div>
+              <p>Showing {totalCount} Top Tier Movies.</p>
+              <MoviesTable
+                movies={movies}
+                sortColumn={sortColumn}
+                onDelete={this.handleDelete}
+                onSort={this.handleSort}
+                onAdd={this.handleAddMovie}
+                onVideo={this.handleVideoModal}
+              />
+              <Pagination
+                itemsCount={totalCount}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                onPageChange={this.handlePageChange}
+              />
+            </div>
+          </div>
+        ) : (
+          <div className="row">
+            <div className="myModal" id="moviesDropdownCardview">
+              <h6
+                style={{ color: "rgb(130 142 153)", marginTop: "2px" }}
+                id="myFilterBy"
+              >
+                Filter By :
+              </h6>
+              <Dropdown
+                items={genres}
+                selectedItem={selectedGenre}
+                onItemSelect={this.handleGenreSelect}
+              />
+              <Dropdown
+                items={contentType}
+                selectedItem={selectedContent}
+                onItemSelect={this.handleContentSelect}
+              />
+              <Dropdown
+                items={cinema}
+                selectedItem={selectedCinema}
+                onItemSelect={this.handleCinemaSelect}
+              />
+            </div>
+            <p>Showing {totalCount} Top Tier Movies.</p>
+            <MoviesCardView movies={movies} onVideo={this.handleVideoModal} />
+            <Pagination
+              itemsCount={totalCount}
+              pageSize={pageSize}
+              currentPage={currentPage}
+              onPageChange={this.handlePageChange}
+            />
+          </div>
+        )}
+        <VideoModal
+          isOpen={openVideo}
+          onClose={this.handleClose}
+          movie={movie}
+        />
+      </>
     );
   }
 }
