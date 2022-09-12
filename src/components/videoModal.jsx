@@ -1,29 +1,22 @@
-import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { toast } from "react-toastify";
 import axios from "axios";
 
-import { getCurrentUser } from "../services/authService";
 import Videoplayer from "./common/videoPlayer";
 import Header from "./common/header";
 
 import views_icon from "../icons/views_icon.png";
 import upvotes_icon from "../icons/upvotes_icon.png";
-import add_disable from "../icons/add_disable.png";
 import add_enable from "../icons/add_enable.png";
 import ticket_icon from "../icons/ticket_icon.png";
 
-const VideoModal = ({ isOpen, onClose, movie }) => {
+const VideoModal = ({ isOpen, onClose, movie, onAdd }) => {
   let title, ytId, imdbId, contentType;
-  const user = getCurrentUser();
   const [upvotes, setUpvotes] = useState();
   const [views, setViews] = useState();
   const [more, setMore] = useState(false);
   const [plotOutline, setPlotOutline] = useState();
   const [plotSummary, setPlotSummary] = useState();
   const [releaseDate, setReleaseDate] = useState();
-
-  const navigate = useNavigate();
 
   const handleStats = async () => {
     const { data } = await axios.get(
@@ -44,10 +37,6 @@ const VideoModal = ({ isOpen, onClose, movie }) => {
     setPlotOutline(outline);
     setPlotSummary(summary);
     setReleaseDate(releaseDate);
-  };
-
-  const handleAdddMovie = () => {
-    toast.success("Movie added to rentals 😃");
   };
 
   try {
@@ -133,24 +122,20 @@ const VideoModal = ({ isOpen, onClose, movie }) => {
               {releaseDate}
             </div>
             <div className="divider"></div>
-            <div className="m-2">
-              {user ? (
-                <img
-                  src={add_enable}
-                  alt="enabled"
-                  className="myImg"
-                  onClick={() => handleAdddMovie()}
-                />
-              ) : (
-                <img
-                  src={add_disable}
-                  alt="disabled"
-                  className="myImg"
-                  onClick={() => navigate("/login", { replace: true })}
-                />
-              )}
-            </div>
+            <img
+              src={add_enable}
+              alt="enabled"
+              className="myImg m-2 hiddenImg"
+              onClick={() => onAdd(movie)}
+            />
           </div>
+          <button
+            className="btn btn-primary watchLaterBtn"
+            id="videoModalWatchLaterBtn"
+            onClick={() => onAdd(movie)}
+          >
+            Watch Later
+          </button>
         </div>
       </div>
     </div>
