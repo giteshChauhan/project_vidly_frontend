@@ -211,15 +211,17 @@ class Movies extends Component {
             btnClass={"dropdown-toggle myListGroupDropdown"}
             dropdownMenuId={"myListGroupDropdownMenu"}
           />
-          <Dropdown
-            items={sortItems}
-            sortColumn={sortColumn}
-            selectedItem={selectedSort}
-            onSort={this.handleSort}
-            onItemSelect={this.handleSortSelected}
-            btnClass={"dropdown-toggle myListGroupDropdown"}
-            dropdownMenuId={"myListGroupDropdownMenuSort"}
-          />
+          {!isList && (
+            <Dropdown
+              items={sortItems}
+              sortColumn={sortColumn}
+              selectedItem={selectedSort}
+              onSort={this.handleSort}
+              onItemSelect={this.handleSortSelected}
+              btnClass={"dropdown-toggle myListGroupDropdown"}
+              dropdownMenuId={"myListGroupDropdownMenuSort"}
+            />
+          )}
           <img
             className="myImg hiddenImg"
             style={{ margin: "0 6px ", height: "47px" }}
