@@ -1,4 +1,4 @@
-const MoviesCardView = ({ movies, onVideo }) => {
+const MoviesCardView = ({ movies, onVideo, onAdd }) => {
   return (
     <div className="row" id="moviesCardRow">
       {movies.map((movie) => {
@@ -19,14 +19,17 @@ const MoviesCardView = ({ movies, onVideo }) => {
               margin: "8px",
               borderRadius: "0px",
             }}
-            onClick={() => onVideo(movie)}
             key={_id}
           >
-            <div className="crop-container">
+            <div className="crop-container" onClick={() => onVideo(movie)}>
               <img src={url} alt={title} className="card-img-top" />
             </div>
             <div className="card-body">
-              <div className="card-title myTitle" style={{ fontSize: "22px" }}>
+              <div
+                className="card-title myTitle"
+                style={{ fontSize: "22px" }}
+                onClick={() => onVideo(movie)}
+              >
                 {title}{" "}
                 <span style={{ color: "#AAAAAA", fontSize: "14px" }}>
                   :{contentType.name}
@@ -39,6 +42,12 @@ const MoviesCardView = ({ movies, onVideo }) => {
                 <br />
                 Genres: <span style={{ color: "#6e00ff" }}>{genre.name}</span>
               </div>
+              <button
+                className="btn btn-primary watchLaterBtn"
+                onClick={() => onAdd(movie)}
+              >
+                Watch Later
+              </button>
             </div>
           </div>
         );
