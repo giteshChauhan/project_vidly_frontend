@@ -1,8 +1,8 @@
-const SearchBox = ({ value, onChange }) => {
+const SearchBox = ({ value, id, onChange }) => {
   return (
     <input
-      className="form-control"
-      id="mySearchBox"
+      className="form-control mySearchBox"
+      id={id}
       name="query"
       type="text"
       value={value}
@@ -11,6 +11,10 @@ const SearchBox = ({ value, onChange }) => {
       placeholder="Search..."
     />
   );
+};
+
+SearchBox.defaultProps = {
+  id: null,
 };
 
 export default SearchBox;
