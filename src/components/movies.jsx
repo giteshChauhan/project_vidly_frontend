@@ -33,16 +33,22 @@ class Movies extends Component {
       movie: {},
     },
     queries: [
-      { name: "By title", _id: 0 },
-      { name: "By rating", _id: 1 },
-      { name: "By year", _id: 2 },
+      { name: "Search by title", _id: 0 },
+      { name: "Search by rating", _id: 1 },
+      { name: "Search by year", _id: 2 },
+    ],
+    sortItems: [
+      { name: "Sort by title", _id: 0 },
+      { name: "Sort by rating", _id: 1 },
+      { name: "Sort by year", _id: 2 },
     ],
     pageSize: 8,
     currentPage: 1,
     selectedGenre: { name: "All Genres" },
     selectedContent: { name: "All Content" },
     selectedCinema: { name: "All Cinema" },
-    selectedQuery: { name: "By title" },
+    selectedQuery: { name: "Search by title" },
+    selectedSort: { name: "Sort by title" },
     searchQuery: "",
     sortColumn: { path: "title", order: "asc" },
   };
@@ -91,6 +97,10 @@ class Movies extends Component {
     this.setState({ selectedQuery: query, searchQuery: "", currentPage: 1 });
   };
 
+  handleSortSelected = (sort) => {
+    this.setState({ selectedSort: sort });
+  };
+
   handleSort = (sortColumn) => {
     this.setState({ sortColumn });
   };
@@ -100,9 +110,8 @@ class Movies extends Component {
   };
 
   handleAddMovie = (movie) => {
-    //const user = auth.getCurrentUser();
-    // console.log(movie._id);
-    toast.info(`Added ${movie.title}`);
+    if (user) toast.success(`Added ${movie.title}`);
+    else toast.info("Please login/register");
   };
 
   handleVideoModal = (movie) => {
@@ -136,13 +145,13 @@ class Movies extends Component {
     let filtered = allMovies;
     let queryTitle = selectedQuery.name;
 
-    if (searchQuery && queryTitle === "By title")
+    if (searchQuery && queryTitle === "Search by title")
       filtered = filtered.filter((m) =>
         m.title.toLowerCase().startsWith(searchQuery.toLowerCase())
       );
-    if (searchQuery && queryTitle === "By rating")
+    if (searchQuery && queryTitle === "Search by rating")
       filtered = filtered.filter((m) => m.rating === parseFloat(searchQuery));
-    if (searchQuery && queryTitle === "By year")
+    if (searchQuery && queryTitle === "Search by year")
       filtered = filtered.filter((m) => m.year === parseInt(searchQuery));
     if (selectedGenre && selectedGenre._id)
       filtered = filtered.filter((m) => m.genre._id === selectedGenre._id);
@@ -169,10 +178,12 @@ class Movies extends Component {
       cinema,
       contentType,
       queries,
+      sortItems,
       selectedGenre,
       selectedCinema,
       selectedContent,
       selectedQuery,
+      selectedSort,
       sortColumn,
       searchQuery,
     } = this.state;
@@ -182,8 +193,17 @@ class Movies extends Component {
 
     return (
       <>
+        <SearchBox
+          value={searchQuery}
+          onChange={this.handleSearch}
+          id={"moviesSearchBoxUp"}
+        />
         <div className="input-group" id="moviesInputGroup">
-          <SearchBox value={searchQuery} onChange={this.handleSearch} />
+          <SearchBox
+            value={searchQuery}
+            onChange={this.handleSearch}
+            id={"moviesSearchBox"}
+          />
           <Dropdown
             items={queries}
             selectedItem={selectedQuery}
@@ -191,15 +211,24 @@ class Movies extends Component {
             btnClass={"dropdown-toggle myListGroupDropdown"}
             dropdownMenuId={"myListGroupDropdownMenu"}
           />
+          <Dropdown
+            items={sortItems}
+            sortColumn={sortColumn}
+            selectedItem={selectedSort}
+            onSort={this.handleSort}
+            onItemSelect={this.handleSortSelected}
+            btnClass={"dropdown-toggle myListGroupDropdown"}
+            dropdownMenuId={"myListGroupDropdownMenuSort"}
+          />
           <img
-            className="myImg"
+            className="myImg hiddenImg"
             style={{ margin: "0 6px ", height: "47px" }}
             alt="card"
             onClick={() => this.setState({ isList: false })}
             src={cardview_icon}
           />
           <img
-            className="myImg"
+            className="myImg hiddenImg"
             style={{ height: "42px" }}
             alt="list"
             src={listview_icon}
@@ -325,7 +354,11 @@ class Movies extends Component {
               />
             </div>
             <p>Showing {totalCount} Top Tier Movies.</p>
-            <MoviesCardView movies={movies} onVideo={this.handleVideoModal} />
+            <MoviesCardView
+              movies={movies}
+              onVideo={this.handleVideoModal}
+              onAdd={this.handleAddMovie}
+            />
             <Pagination
               itemsCount={totalCount}
               pageSize={pageSize}
@@ -338,6 +371,7 @@ class Movies extends Component {
           isOpen={openVideo}
           onClose={this.handleClose}
           movie={movie}
+          onAdd={this.handleAddMovie}
         />
       </>
     );
