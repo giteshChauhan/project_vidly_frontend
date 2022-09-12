@@ -75,7 +75,6 @@
 }
 
 .card:hover{
-  cursor: pointer;
   box-shadow: 0 0 4px 4px #6e00ff;
 }
 
@@ -143,13 +142,13 @@ table{
   box-shadow: 0 0 1px 1px #6e00ff;
 }
 
-#mySearchBox{
+.mySearchBox{
   background-color: #181818;
   border-color: #6e00ff;
   color: white;
 }
 
-#mySearchBox:hover{
+.mySearchBox:hover{
   box-shadow: 0 0 1px 1px #6e00ff;
   cursor: text;
 }
@@ -163,6 +162,22 @@ table{
   margin: 10px 0;
 }
 
+.watchLaterBtn{
+  width: 100%;
+  background-color: #6e00ff !important;
+  margin-top: 25px;
+  padding: 3px !important;
+}
+
+.watchLaterBtn:hover{
+  box-shadow: 0 0 2px 2px #6e00ff !important;
+  color: #e2dada !important;
+}
+
+#videoModalWatchLaterBtn{
+  display: none;
+}
+
 .myListGroupDropdown{
   padding: 7px;
   box-shadow: 0 0 1px 1px #6e00ff;
@@ -174,11 +189,24 @@ table{
 }
 
 #myListGroupDropdownMenu{
-  transform: translate3d(62.8px,43.4px,0px) !important;
-  width: 100%;
+  transform: translate3d(80.8px,35.4px,0px) !important;
+  width: 118%;
   background-color: #181818;
   border: 1px solid #6e00ff;
   box-shadow: 0 0 1px 1px #6e00ff;
+}
+
+#myListGroupDropdownMenuSort{
+  transform: translate3d(66.8px,36.4px,0px) !important;
+  width: 117%;
+  background-color: #181818;
+  border: 1px solid #6e00ff;
+  box-shadow: 0 0 1px 1px #6e00ff;
+}
+
+#moviesInputGroup{
+  padding: 0 10%;
+  width: 96%;
 }
 
 .myDropdownBtn{
@@ -362,8 +390,4 @@ table{
 .bd-footer{
   border-top: 1px solid #6e00ff;
   border-radius: 5px;
-}
-
-#moviesInputGroup{
-  padding: 0 10%;
 }
