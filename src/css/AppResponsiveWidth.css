@@ -23,10 +23,16 @@
       justify-content: space-around;
     }
     #moviesDropdownCardview{
-      width: 100%;
+      width: 95%;
+      margin-left: 6px;
     }
     #moviesInputGroup{
       padding: 0;
+      margin: 0;
+      width: 100%;
+    }
+    #moviesSearchBox{
+      display: none;
     }
     .break { display: block; flex-basis: 100%}
     .my-modal-body{
@@ -43,6 +49,9 @@
   
   @media screen and (min-width: 992px) {
     #dropdownProfile {display: none;}
+    #moviesSearchBoxUp{
+      display: none;
+    }
   }
   
   
@@ -63,6 +72,9 @@
       margin-top: 10px;
       align-items: center;
       justify-content: center;
+    }
+    #staticBackdropLabel{
+      margin-bottom: 8px !important;
     }
     .myDropdownBtn{
       padding: 1px 15px !important;
@@ -90,6 +102,13 @@
     }
     .myBox{
       margin: 5rem 0;
+    }
+    .hiddenImg{
+      display: none;
+    }
+    #videoModalWatchLaterBtn{
+      display: block;
+      margin-top: 0px;
     }
   }
   
