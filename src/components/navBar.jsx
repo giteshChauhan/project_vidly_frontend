@@ -1,9 +1,10 @@
-import logo from "../icons/PV.png";
-import profileLogo from "../icons/profile.png";
-import title from "../icons/PV_title.png";
 import { Link } from "react-router-dom";
 
-function Navbar({ user }) {
+import profileLogo from "../icons/profile.png";
+import title from "../icons/PV_title.png";
+import logo from "../icons/PV.png";
+
+function Navbar({ user, watchLaterSize }) {
   const handleUser = () => {
     if (user)
       return [
@@ -48,6 +49,14 @@ function Navbar({ user }) {
                 d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
               ></path>
             </svg>
+            {user && watchLaterSize !== 0 ? (
+              <span
+                className="position-absolute top-0 p-1 bg-danger border border-light rounded-circle"
+                style={{ transform: "translate(-9px,18px)" }}
+              />
+            ) : (
+              <></>
+            )}
           </button>
 
           <Link
@@ -101,19 +110,6 @@ function Navbar({ user }) {
                 </div>
               </div>
 
-              <hr
-                className="d-lg-none text-white-50"
-                style={{ height: "1px", backgroundColor: "white" }}
-              />
-
-              <div className="navbar-nav flex-row flex-wrap bd-navbar-nav">
-                <div className="nav-item col-6 col-lg-auto">
-                  <Link to={"/rentals"} className="nav-link">
-                    Rentals
-                  </Link>
-                </div>
-              </div>
-
               {user && user.isAdmin && (
                 <>
                   <hr
@@ -130,6 +126,51 @@ function Navbar({ user }) {
                   </div>
                 </>
               )}
+
+              <hr
+                className="d-lg-none text-white-50"
+                style={{ height: "1px", backgroundColor: "white" }}
+              />
+
+              <div className="navbar-nav flex-row flex-wrap bd-navbar-nav">
+                <div className="nav-item col-6 col-lg-auto">
+                  <Link
+                    to={"/watchlater"}
+                    className="nav-link position-absolute"
+                  >
+                    WatchLater
+                    {user && (
+                      <span
+                        className="position-absolute top-0 start-100 badge rounded-pill"
+                        id="watchlater-badge"
+                      >
+                        {watchLaterSize}
+                      </span>
+                    )}
+                  </Link>
+                </div>
+              </div>
+
+              <hr
+                className="d-lg-none text-white-50"
+                style={{
+                  height: "1px",
+                  backgroundColor: "white",
+                  marginTop: "55px",
+                }}
+              />
+
+              <div className="navbar-nav flex-row flex-wrap bd-navbar-nav">
+                <div className="nav-item col-6 col-lg-auto">
+                  <Link
+                    to={"/history"}
+                    className="nav-link"
+                    id="history-nav-link"
+                  >
+                    History
+                  </Link>
+                </div>
+              </div>
 
               <hr className="d-lg-none text-white-50" />
             </div>
