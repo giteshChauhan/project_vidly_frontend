@@ -4,6 +4,8 @@ import axios from "axios";
 import Videoplayer from "./common/videoPlayer";
 import Header from "./common/header";
 
+import { addHistory } from "../services/historyService";
+
 import views_icon from "../icons/views_icon.png";
 import upvotes_icon from "../icons/upvotes_icon.png";
 import add_enable from "../icons/add_enable.png";
@@ -25,6 +27,7 @@ const VideoModal = ({ isOpen, onClose, movie, onAdd }) => {
     const { likeCount, viewCount } = data.items[0].statistics;
     setUpvotes(likeCount);
     setViews(viewCount);
+    await addHistory({ movieId: movie._id });
   };
 
   const handleOverview = async () => {
@@ -122,24 +125,33 @@ const VideoModal = ({ isOpen, onClose, movie, onAdd }) => {
               {releaseDate}
             </div>
             <div className="divider"></div>
-            <img
-              src={add_enable}
-              alt="enabled"
-              className="myImg m-2 hiddenImg"
-              onClick={() => onAdd(movie)}
-            />
+            {onAdd && (
+              <img
+                src={add_enable}
+                alt="enabled"
+                className="myImg m-2 hiddenImg"
+                onClick={() => onAdd(movie)}
+              />
+            )}
           </div>
-          <button
-            className="btn btn-primary watchLaterBtn"
-            id="videoModalWatchLaterBtn"
-            onClick={() => onAdd(movie)}
-          >
-            Watch Later
-          </button>
+
+          {onAdd && (
+            <button
+              className="btn btn-primary watchLaterBtn"
+              id="videoModalWatchLaterBtn"
+              onClick={() => onAdd(movie)}
+            >
+              Watch Later
+            </button>
+          )}
         </div>
       </div>
     </div>
   );
+};
+
+VideoModal.defaultProps = {
+  onAdd: null,
 };
 
 export default VideoModal;
