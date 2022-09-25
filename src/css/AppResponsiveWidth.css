@@ -34,6 +34,9 @@
     #moviesSearchBox{
       display: none;
     }
+    #watchlater-badge{
+      transform: translate(-33%, -32%);
+    }
     .break { display: block; flex-basis: 100%}
     .my-modal-body{
       overflow-y: auto !important;
@@ -51,6 +54,9 @@
     #dropdownProfile {display: none;}
     #moviesSearchBoxUp{
       display: none;
+    }
+    #history-nav-link{
+      margin-left: 105px;
     }
   }
   
@@ -109,6 +115,16 @@
     #videoModalWatchLaterBtn{
       display: block;
       margin-top: 0px;
+    }
+    #moviesSearchSortDivider{
+      display: flex;
+    }
+    #card-crop-container{
+      width: 297.5px;
+      height: 130.5px;
+    }
+    #card-card-img-top{
+      margin-top: -28px;
     }
   }
   
