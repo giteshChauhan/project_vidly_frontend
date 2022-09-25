@@ -52,7 +52,7 @@ function App() {
   useEffect(() => {
     const user = auth.getCurrentUser();
     setUser(user);
-    fetchWatchLaterMovieIds();
+    if (user) fetchWatchLaterMovieIds();
   }, [fetchWatchLaterMovieIds]);
 
   return (
