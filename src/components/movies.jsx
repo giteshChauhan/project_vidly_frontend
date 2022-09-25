@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import _ from "lodash";
 
 import { deleteMovie } from "../services/movieService";
+import { updateWatchLater } from "../services/watchLaterService";
 
 import auth from "../services/authService";
 import { paginate } from "../utils/paginate";
@@ -109,9 +110,16 @@ class Movies extends Component {
     this.setState({ searchQuery: query, currentPage: 1 });
   };
 
-  handleAddMovie = (movie) => {
-    if (user) toast.success(`Added ${movie.title}`);
-    else toast.info("Please login/register");
+  handleAddMovie = async (movie) => {
+    if (user) {
+      try {
+        await updateWatchLater({ movieId: movie._id });
+        this.props.onAddWatchLater(movie);
+        toast.success("Movie Added");
+      } catch (err) {
+        toast.info(`${err.response.data}`);
+      }
+    } else toast.info("Please login/register");
   };
 
   handleVideoModal = (movie) => {
@@ -211,6 +219,7 @@ class Movies extends Component {
             btnClass={"dropdown-toggle myListGroupDropdown"}
             dropdownMenuId={"myListGroupDropdownMenu"}
           />
+          <div className="divider" id="moviesSearchSortDivider" />
           {!isList && (
             <Dropdown
               items={sortItems}
