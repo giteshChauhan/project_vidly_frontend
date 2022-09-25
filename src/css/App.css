@@ -141,6 +141,9 @@ table{
   border: 1px solid #6e00ff;
   box-shadow: 0 0 1px 1px #6e00ff;
 }
+#moviesSearchSortDivider{
+  display: none;
+}
 
 .mySearchBox{
   background-color: #181818;
@@ -165,8 +168,8 @@ table{
 .watchLaterBtn{
   width: 100%;
   background-color: #6e00ff !important;
-  margin-top: 25px;
-  padding: 3px !important;
+  margin-top: 15px;
+  padding: 2px !important;
 }
 
 .watchLaterBtn:hover{
@@ -190,7 +193,7 @@ table{
 
 #myListGroupDropdownMenu{
   transform: translate3d(80.8px,35.4px,0px) !important;
-  width: 118%;
+  width: 108%;
   background-color: #181818;
   border: 1px solid #6e00ff;
   box-shadow: 0 0 1px 1px #6e00ff;
@@ -390,4 +393,39 @@ table{
 .bd-footer{
   border-top: 1px solid #6e00ff;
   border-radius: 5px;
+}
+
+#card-crop-container{
+  width: 434.5px;
+}
+
+#card-card-img-top{
+  margin-top: -48px;
+}
+
+#watchlater-badge{
+  transform: translate(-85%, -32%);
+  background-color: crimson;
+  border: 2px solid white;
+  padding: 3px;
+}
+
+.myDateBox{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #3c4043;
+  padding: 1rem 1.5rem;
+  border-radius: .5rem;
+  margin-top: 1.5rem;
+  width: 85%;
+}
+
+.myDate{
+  letter-spacing: .00625em;
+  font-family: "Google Sans",Roboto,Arial,sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5rem;
+  margin: 0;
 }
