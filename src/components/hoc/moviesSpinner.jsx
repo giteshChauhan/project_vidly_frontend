@@ -8,7 +8,7 @@ import { getCinema } from "../../services/cinemaService";
 
 import Movies from "../movies";
 
-const MoviesSpinner = () => {
+const MoviesSpinner = ({ onAddWatchLater }) => {
   const [movies, setMovies] = useState(null);
   const [genres, setGenres] = useState(null);
   const [cinema, setCinema] = useState(null);
@@ -57,6 +57,7 @@ const MoviesSpinner = () => {
           genres={genres}
           cinema={cinema}
           contentType={contentType}
+          onAddWatchLater={onAddWatchLater}
         />
       ) : (
         <div className="mySpinner">
