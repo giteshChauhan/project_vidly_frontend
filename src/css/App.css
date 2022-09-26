@@ -429,3 +429,9 @@ table{
   line-height: 1.5rem;
   margin: 0;
 }
+
+#watchLaterSort{
+  width: 10%;
+  transform: translate3d(123px, 28px, 0px) !important;
+  border: 2px solid #6e00ff;
+}
