@@ -1,3 +1,5 @@
+import sort_icon from "../../icons/sort_icon.png";
+
 const Dropdown = ({
   items,
   btnClass,
@@ -8,6 +10,7 @@ const Dropdown = ({
   sortColumn,
   onSort,
   onItemSelect,
+  isSortIcon,
 }) => {
   const lastWord = (name) => {
     const n = name.lastIndexOf(" ");
@@ -42,6 +45,13 @@ const Dropdown = ({
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
+        {isSortIcon && (
+          <img
+            src={sort_icon}
+            alt="Sort"
+            style={{ height: "24px", marginRight: "5px" }}
+          />
+        )}
         {selectedItem.name}
       </button>
       <ul className="dropdown-menu" id={dropdownMenuId}>
@@ -78,6 +88,7 @@ Dropdown.defaultProps = {
   onItemSelect: null,
   btnClass: "dropdown-toggle myDropdownBtn",
   dropdownMenuId: "myDropdownMenu",
+  isSortIcon: false,
 };
 
 export default Dropdown;
