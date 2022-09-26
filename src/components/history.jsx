@@ -35,7 +35,6 @@ const History = () => {
 
   return (
     <div style={{ marginLeft: "7%" }}>
-      <h3>History</h3>
       {moviesData.length ? (
         moviesData.map(({ movie, data }) => {
           const date = moment(movie.addedOn).format("l");
@@ -56,12 +55,15 @@ const History = () => {
           className="myModal"
           style={{
             textAlign: "center",
-            marginTop: "-46px",
+            marginTop: "-20px",
             marginLeft: "-20px",
             color: "#e2dada",
           }}
         >
           <span style={{ fontSize: "1.3rem" }}>
+            <span style={{ color: "white", fontSize: "1.5rem" }}>
+              History :{" "}
+            </span>
             Currently no movies watched. Enjoy add free content{" "}
             <img src={chill_icon} alt="and chill" className="myImg" />
           </span>
