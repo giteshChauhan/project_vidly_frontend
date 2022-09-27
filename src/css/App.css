@@ -431,7 +431,7 @@ table{
 }
 
 #watchLaterSort{
-  width: 10%;
-  transform: translate3d(123px, 28px, 0px) !important;
+  width: auto;
+  transform: translate3d(111px, 30px, 0px) !important;
   border: 2px solid #6e00ff;
 }
