@@ -102,7 +102,8 @@ function App() {
       pathname === "/register" ||
       pathname === "/watchlater" ||
       pathname === "/history" ||
-      pathname === "/customers" ? null : (
+      pathname === "/customers" ||
+      pathname === "/not-found" ? null : (
         <Footer />
       )}
     </>
