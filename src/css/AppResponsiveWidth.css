@@ -82,6 +82,9 @@
     #staticBackdropLabel{
       margin-bottom: 8px !important;
     }
+    #watchLaterSort{
+      transform: translate3d(98px, 30px, 0px) !important;
+    }
     .myDropdownBtn{
       padding: 1px 15px !important;
     }
