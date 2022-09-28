@@ -125,7 +125,46 @@ class MovieFormComponent extends Form {
   };
 
   handleVideoSelection = (videoId) => {
+    const {
+      genreId,
+      rating,
+      contentTypeId,
+      cinemaId,
+      title,
+      year,
+      imdb_id,
+      thumbnailUrl,
+    } = this.state.data;
+    const newData = {
+      title,
+      thumbnailUrl,
+      genreId,
+      year,
+      rating,
+      yt_id: videoId,
+      imdb_id,
+      contentTypeId,
+      cinemaId,
+    };
     this.setState({ videoId });
+    this.setState({ data: newData });
+  };
+
+  handleMovieselection = (movie) => {
+    const { genreId, rating, yt_id, contentTypeId, cinemaId } = this.state.data;
+    const { title, year, url, newId } = movie;
+    const newData = {
+      title,
+      thumbnailUrl: url,
+      genreId,
+      year,
+      rating,
+      yt_id,
+      imdb_id: newId,
+      contentTypeId,
+      cinemaId,
+    };
+    this.setState({ data: newData });
   };
 
   handleMovieSearch = async () => {
@@ -133,7 +172,11 @@ class MovieFormComponent extends Form {
     const { data } = await axios.get(
       `/.netlify/functions/fetchMovies?title=${movieTitle}&country=${movieCountry}`
     );
-    const moviesMetaData = data.results;
+    let moviesMetaData = data.results;
+    if (moviesMetaData === undefined) {
+      moviesMetaData = [];
+      toast.error("Something Failed");
+    }
     this.setState({ moviesMetaData });
   };
 
@@ -208,7 +251,10 @@ class MovieFormComponent extends Form {
                 </button>
               </div>
               {moviesMetaData.length ? (
-                <MoviesList data={moviesMetaData} />
+                <MoviesList
+                  data={moviesMetaData}
+                  onMovieSelected={this.handleMovieselection}
+                />
               ) : (
                 <h6 style={{ color: "gray" }}>search to see movies</h6>
               )}
