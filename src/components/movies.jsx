@@ -43,7 +43,7 @@ class Movies extends Component {
       { name: "Sort by rating", _id: 1 },
       { name: "Sort by year", _id: 2 },
     ],
-    pageSize: 8,
+    pageSize: 32,
     currentPage: 1,
     selectedGenre: { name: "All Genres" },
     selectedContent: { name: "All Content" },
