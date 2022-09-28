@@ -1,10 +1,10 @@
 import Movie from "./movie";
 
-const MoviesList = ({ data }) => {
+const MoviesList = ({ data, onMovieSelected }) => {
   return (
     <div className="row">
       <h6>Movies List:</h6>
-      <Movie data={data} />
+      <Movie data={data} onMovieSelected={onMovieSelected} />
     </div>
   );
 };
