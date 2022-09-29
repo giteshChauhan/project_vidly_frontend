@@ -1,5 +1,6 @@
 import { useEffect, useCallback, useState } from "react";
-import moment from "moment/moment";
+import moment from "moment";
+import _ from "lodash";
 
 import Card from "./common/card";
 import MyDate from "./common/myDate";
@@ -25,6 +26,7 @@ const History = () => {
       const { data } = await getMovie(id);
       movieData.push({ movie, data });
     }
+    _.reverse(movieData);
     setMoviesData(movieData);
   };
 
