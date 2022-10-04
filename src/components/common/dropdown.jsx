@@ -3,6 +3,7 @@ import sort_icon from "../../icons/sort_icon.png";
 const Dropdown = ({
   items,
   btnClass,
+  btnId,
   dropdownMenuId,
   textProperty,
   valueProperty,
@@ -11,7 +12,15 @@ const Dropdown = ({
   onSort,
   onItemSelect,
   isSortIcon,
+  areImages,
 }) => {
+  let dropdownId = dropdownMenuId;
+
+  if (!dropdownMenuId) {
+    if (items.length > 4) dropdownId = "myDropdownMenuScrollable";
+    else dropdownId = "myDropdownMenu";
+  }
+
   const lastWord = (name) => {
     const n = name.lastIndexOf(" ");
     return name.substring(n + 1);
@@ -40,7 +49,11 @@ const Dropdown = ({
     <div className="dropdown">
       <button
         className={btnClass}
-        style={{ backgroundColor: "#181818", border: "none" }}
+        id={btnId}
+        style={{
+          backgroundColor: "#181818",
+          border: "none",
+        }}
         type="button"
         data-bs-toggle="dropdown"
         aria-expanded="false"
@@ -54,7 +67,7 @@ const Dropdown = ({
         )}
         {selectedItem.name}
       </button>
-      <ul className="dropdown-menu" id={dropdownMenuId}>
+      <ul className="dropdown-menu" id={dropdownId}>
         {items.map((item) => (
           <li
             key={item[valueProperty]}
@@ -70,6 +83,13 @@ const Dropdown = ({
                 : () => onItemSelect(item)
             }
           >
+            {areImages && (
+              <img
+                src={item.imgSrc}
+                alt="*"
+                style={{ height: "24px", marginRight: "5px" }}
+              />
+            )}
             {item[textProperty]}
             {onSort && renderSortIcon(item[textProperty])}
           </li>
@@ -87,8 +107,9 @@ Dropdown.defaultProps = {
   selectedItem: {},
   onItemSelect: null,
   btnClass: "dropdown-toggle myDropdownBtn",
-  dropdownMenuId: "myDropdownMenu",
+  btnId: null,
   isSortIcon: false,
+  areImages: false,
 };
 
 export default Dropdown;
