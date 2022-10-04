@@ -1,16 +1,15 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 import Dropdown from "./common/dropdown";
 import Card from "./common/card";
 
-import { getWatchLater, removeWatchLater } from "../services/watchLaterService";
-import { getMovie } from "../services/movieService";
+import { removeWatchLater } from "../services/watchLaterService";
 
 import chill_icon from "../icons/chill_icon.png";
 
-const WatchLater = ({ onRemoveWatchLater }) => {
-  const [moviesData, setMoviesData] = useState([]);
+const WatchLater = ({ onRemoveWatchLater, moviesData }) => {
+  const [moviesDataCopy, setMoviesDataCopy] = useState(moviesData);
   const sortItems = [
     { name: "Newest First", _id: 0 },
     { name: "Most Popular", _id: 1 },
@@ -18,37 +17,21 @@ const WatchLater = ({ onRemoveWatchLater }) => {
   ];
   const [selectedItem, setSelectedItem] = useState(sortItems[0]);
 
-  const fetchWatchLaterMovieIds = useCallback(async () => {
-    const { data } = await getWatchLater();
-    fetchMovieById(data);
-  }, []);
-
-  const fetchMovieById = async (movieIds) => {
-    let movieData = [];
-    for (let movie of movieIds) {
-      const id = movie.movieId;
-      const { data } = await getMovie(id);
-      movieData.push({ movie, data });
-    }
-    setMoviesData(movieData);
-  };
-
   useEffect(() => {
     document.title = "VIDLY | WatchLater";
-    fetchWatchLaterMovieIds();
-  }, [fetchWatchLaterMovieIds]);
+  }, []);
 
   const handleRemoveVideo = async (movieWatchLater) => {
-    const moviesCopy = [...moviesData];
+    const moviesCopy = [...moviesDataCopy];
     try {
-      const movies = moviesData.filter(
+      const movies = moviesDataCopy.filter(
         ({ movie }) => movieWatchLater !== movie
       );
-      setMoviesData(movies);
+      setMoviesDataCopy(movies);
       await removeWatchLater(movieWatchLater.movieId);
       toast.success("Removed Successfully");
     } catch (err) {
-      setMoviesData(moviesCopy);
+      setMoviesDataCopy(moviesCopy);
       toast.error("Something Failed");
     }
   };
@@ -56,29 +39,29 @@ const WatchLater = ({ onRemoveWatchLater }) => {
   const handleSort = (item) => {
     setSelectedItem(item);
     if (item._id === 0) {
-      moviesData.sort(({ movie: a }, { movie: b }) => {
+      moviesDataCopy.sort(({ movie: a }, { movie: b }) => {
         if (a.addedOn >= b.addedOn) return 1;
         else return -1;
       });
     }
     if (item._id === 1) {
-      moviesData.sort(({ data: a }, { data: b }) => {
+      moviesDataCopy.sort(({ data: a }, { data: b }) => {
         if (a.rating >= b.rating) return -1;
         else return 1;
       });
     }
     if (item._id === 2) {
-      moviesData.sort(({ movie: a }, { movie: b }) => {
+      moviesDataCopy.sort(({ movie: a }, { movie: b }) => {
         if (b.addedOn >= a.addedOn) return 1;
         else return -1;
       });
     }
-    setMoviesData(moviesData);
+    setMoviesDataCopy(moviesDataCopy);
   };
 
   return (
-    <div style={{ marginLeft: "7%" }}>
-      {moviesData.length ? (
+    <div style={{ marginLeft: "7%", marginTop: "-38px" }}>
+      {moviesDataCopy.length ? (
         <Dropdown
           items={sortItems}
           selectedItem={selectedItem}
@@ -87,8 +70,8 @@ const WatchLater = ({ onRemoveWatchLater }) => {
           isSortIcon={true}
         />
       ) : null}
-      {moviesData.length ? (
-        moviesData.map(({ movie, data }) => {
+      {moviesDataCopy.length ? (
+        moviesDataCopy.map(({ movie, data }) => {
           return (
             <Card
               key={movie.movieId}
