@@ -27,7 +27,11 @@ const MoviesCardView = ({ movies, onVideo, onAdd }) => {
             <div className="card-body">
               <div
                 className="card-title myTitle"
-                style={{ fontSize: "22px" }}
+                style={
+                  title.length < 20
+                    ? { marginBottom: "41px", fontSize: "22px" }
+                    : { fontSize: "22px" }
+                }
                 onClick={() => onVideo(movie)}
               >
                 {title}{" "}
