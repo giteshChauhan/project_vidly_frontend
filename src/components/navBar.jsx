@@ -1,10 +1,26 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
+import SearchBox from "./common/searchBox";
+import Dropdown from "./common/dropdown";
+
+import search_icon from "../icons/search_icon.png";
+import back_icon from "../icons/back_icon.png";
 import profileLogo from "../icons/profile.png";
 import title from "../icons/PV_title.png";
 import logo from "../icons/PV.png";
 
-function Navbar({ user, watchLaterSize }) {
+function Navbar({
+  user,
+  watchLaterSize,
+  queries,
+  selectedQuery,
+  searchQuery,
+  onQuerySelect,
+  onSearch,
+  pathname,
+}) {
+  const [isSearch, setIsSearch] = useState(false);
   const handleUser = () => {
     if (user)
       return [
@@ -176,6 +192,47 @@ function Navbar({ user, watchLaterSize }) {
             </div>
           </div>
 
+          {pathname === "/movies" ? (
+            <div className="input-group" id="moviesInputGroup">
+              <SearchBox
+                value={searchQuery}
+                onChange={onSearch}
+                id={"moviesSearchBox"}
+              />
+              <Dropdown
+                items={queries}
+                selectedItem={selectedQuery}
+                onItemSelect={onQuerySelect}
+                btnClass={"dropdown-toggle myListGroupDropdown"}
+                dropdownMenuId={"myListGroupDropdownMenu"}
+              />
+            </div>
+          ) : null}
+
+          {pathname === "/movies" && isSearch ? (
+            <div className="input-group" id="moviesInputGroupMobile">
+              <img
+                src={back_icon}
+                alt="Back"
+                style={{ height: "26px", marginTop: "9px", marginRight: "5px" }}
+                onClick={() => setIsSearch(false)}
+              />
+              <SearchBox
+                value={searchQuery}
+                onChange={onSearch}
+                id={"moviesSearchBoxMobile"}
+              />
+              <Dropdown
+                items={queries}
+                selectedItem={selectedQuery}
+                onItemSelect={onQuerySelect}
+                btnId={"listGroupDropdownBtnMobile"}
+                btnClass={"dropdown-toggle myListGroupDropdown"}
+                dropdownMenuId={"myListGroupDropdownMenu"}
+              />
+            </div>
+          ) : null}
+
           <ul
             className="navbar-nav flex-row flex-wrap ms-md-auto"
             id="bdSidebar"
@@ -207,14 +264,26 @@ function Navbar({ user, watchLaterSize }) {
             </li>
           </ul>
 
-          <div className="dropdown" id="dropdownProfile">
+          {pathname === "/movies" && !isSearch ? (
             <img
-              src={profileLogo}
-              height="32px"
-              type="button"
-              data-bs-toggle="dropdown"
-              alt="Me"
+              src={search_icon}
+              style={{ height: "26px" }}
+              id="searchBoxIcon"
+              alt="Search"
+              onClick={() => setIsSearch(true)}
             />
+          ) : null}
+
+          <div className="dropdown" id="dropdownProfile">
+            {!isSearch && (
+              <img
+                src={profileLogo}
+                height="32px"
+                type="button"
+                data-bs-toggle="dropdown"
+                alt="Me"
+              />
+            )}
             <ul className="dropdown-menu myModal">
               <li>
                 <Link
