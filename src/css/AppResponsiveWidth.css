@@ -4,6 +4,13 @@
   }
 }
 
+@media  screen and (max-width: 1220px) {
+  #moviesInputGroup{
+    margin-right: 29px;
+    width: 48%;
+  }
+  }
+
 @media  screen and (max-width: 1200px) {
     .myPlot{
       width: 48rem;
@@ -16,12 +23,36 @@
   @media screen and (max-width: 992px){
     #bdSidebar {display: none;}
     #moviesFilterListGroup{display: none;}
+    #moviesInputGroup{
+      display: none;
+    }
+    #listGroupDropdownBtnMobile{
+      background-color: rgb(24, 24, 24);
+      border: none;
+      margin-top: 6.5px;
+      height: 45px;
+    }
+    #moviesInputGroupMobile{
+      width: 100%;
+      position: absolute;
+      padding: 0px 5px;
+      margin-left: -12px;
+      background-color: rgb(18 18 18 / 88%);
+      height: 60px;
+    }
+
+    #moviesSearchBoxMobile{
+      height: 79%;
+      margin-top: 5px;
+    }
+
     #moviesFilterDropdown{
       display: flex;
       margin: 10px 0px;
       flex-direction: row;
       justify-content: space-around;
     }
+
     #moviesDropdownCardview{
       width: 95%;
       margin-left: 6px;
@@ -31,12 +62,10 @@
       margin: 0;
       width: 100%;
     }
-    #moviesSearchBox{
-      display: none;
-    }
     #watchlater-badge{
       transform: translate(-33%, -32%);
     }
+    #searchBoxIcon{ margin-right: -39%;}
     .break { display: block; flex-basis: 100%}
     .my-modal-body{
       overflow-y: auto !important;
@@ -52,9 +81,7 @@
   
   @media screen and (min-width: 992px) {
     #dropdownProfile {display: none;}
-    #moviesSearchBoxUp{
-      display: none;
-    }
+    #searchBoxIcon{ display: none; }
     #history-nav-link{
       margin-left: 105px;
     }
@@ -85,6 +112,7 @@
     #watchLaterSort{
       transform: translate3d(98px, 30px, 0px) !important;
     }
+    #searchBoxIcon{ margin-right: -33%; }
     .myDropdownBtn{
       padding: 1px 15px !important;
     }
@@ -106,14 +134,14 @@
     #myFilterBy{
       display: none;
     }
+    #myDropdownMenuScrollable{
+      transform: translate3d(80.8px,30.4px,0px) !important;
+    }
     .myBr{
       display: none;
     }
     .myBox{
       margin: 5rem 0;
-    }
-    .hiddenImg{
-      display: none;
     }
     #videoModalWatchLaterBtn{
       display: block;
@@ -129,6 +157,11 @@
     #card-card-img-top{
       margin-top: -28px;
     }
+    #searchBoxIcon{ margin-right: -28%; }
+    #myImgDropdown{
+      width: 132%;
+      transform: translate3d(64px, 27px, 10px) !important;
+    }
   }
   
   @media screen and (max-width: 401px){
@@ -136,4 +169,5 @@
     #myDropdownMenu{
       transform: translate3d(80.8px,30.4px,0px) !important;
     }
+    #searchBoxIcon{ margin-right: -25%; }
   }
