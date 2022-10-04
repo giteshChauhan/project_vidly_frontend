@@ -6,6 +6,72 @@
   --bd-pink-rgb: 214,51,132;
 }
 
+html::-webkit-scrollbar {
+  width: 10px;
+}
+
+html::-webkit-scrollbar-track {
+  background: #181818;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: #6e00ff;
+  border-radius: 10px;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  border-radius: 0px;
+}
+
+html::-webkit-scrollbar-thumb:active {
+  background-color: #6f00ffe3;
+  border-radius: 10px;
+}
+
+.my-modal-body::-webkit-scrollbar {
+  width: 10px;
+}
+
+.my-modal-body::-webkit-scrollbar-track {
+  background: #181818;
+}
+
+.my-modal-body::-webkit-scrollbar-thumb {
+  background: #6e00ff;
+  border-radius: 10px;
+}
+
+.my-modal-body::-webkit-scrollbar-thumb:hover {
+  border-radius: 0px;
+}
+
+.my-modal-body::-webkit-scrollbar-thumb:active {
+  background-color: #6f00ffe3;
+  border-radius: 10px;
+}
+
+#myDropdownMenuScrollable::-webkit-scrollbar {
+  width: 5px;
+}
+
+#myDropdownMenuScrollable::-webkit-scrollbar-track {
+  background: #181818;
+}
+
+#myDropdownMenuScrollable::-webkit-scrollbar-thumb {
+  background: #6e00ff;
+  border-radius: 10px;
+}
+
+#myDropdownMenuScrollable::-webkit-scrollbar-thumb:hover {
+  border-radius: 0px;
+}
+
+#myDropdownMenuScrollable::-webkit-scrollbar-thumb:active {
+  background-color: #6f00ffe3;
+  border-radius: 10px;
+}
+
 @keyframes rise {
   0%{
     transform: translateY(-20px);
@@ -27,7 +93,7 @@
 }
 
 .myBanner{
-  margin-top: -50px;
+  margin-top: -38px;
   display: flex;
   flex-direction: column;
   align-items: center;}
@@ -102,7 +168,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 5rem 0px;
+  margin: 18% 0px;
 }
 
 td,th{
@@ -136,7 +202,18 @@ table{
 
 #myDropdownMenu{
   transform: translate3d(100.8px,30.4px,0px) !important;
-  width: 100%;
+  width: 75%;
+  background-color: #181818;
+  border: 1px solid #6e00ff;
+  box-shadow: 0 0 1px 1px #6e00ff;
+}
+
+#myDropdownMenuScrollable{
+  transform: translate3d(100.8px,30.4px,0px) !important;
+  overflow-y: scroll;
+  height: 8rem;
+  width: 75%;
+  padding-top: 0px;
   background-color: #181818;
   border: 1px solid #6e00ff;
   box-shadow: 0 0 1px 1px #6e00ff;
@@ -192,7 +269,7 @@ table{
 }
 
 #myListGroupDropdownMenu{
-  transform: translate3d(80.8px,35.4px,0px) !important;
+  transform: translate3d(61.8px,-1.6px,0px) !important;
   width: 108%;
   background-color: #181818;
   border: 1px solid #6e00ff;
@@ -200,21 +277,23 @@ table{
 }
 
 #myListGroupDropdownMenuSort{
-  transform: translate3d(66.8px,36.4px,0px) !important;
-  width: 117%;
+  transform: translate3d(117.8px,30.4px,0px) !important;
+  width: 68%;
   background-color: #181818;
   border: 1px solid #6e00ff;
   box-shadow: 0 0 1px 1px #6e00ff;
 }
 
+
 #moviesInputGroup{
-  padding: 0 10%;
-  width: 96%;
+  margin-right: 55px;
+  width: 58%;
 }
 
 .myDropdownBtn{
   color: #6e00ff;
   padding: 1px 30px !important;
+  padding-right: 0px !important;
 }
 
 .dropdown-menu{
@@ -256,8 +335,8 @@ table{
 .myCloseBtn{
   background-color: black;
   color: white;
-  border: 1px solid #6e00ff;
-  border-radius: 4px;
+  border: 2px solid #6e00ff;
+  border-radius: 20px;
   padding: 3px 10px;
 }
 
@@ -299,7 +378,7 @@ table{
   top: 60px;
   left: 0px;
   background: opacity(10%);
-  backdrop-filter: blur(1px);
+  backdrop-filter: blur(8px);
   display: flex;
   justify-content: center;
   align-items: baseline;
@@ -307,11 +386,15 @@ table{
 }
 
 .myModal{
-      background-color: #181818;
+      background-color: #181818b8;
       border: 1px solid #6e00ff;
       border-radius: 10px;
       box-shadow: 0 0 1px 1px #6e00ff;
       padding: 4px;
+}
+
+.modal-lg{
+  --bs-modal-width: 600px !important;
 }
 
 .myListModal{
@@ -434,4 +517,11 @@ table{
   width: auto;
   transform: translate3d(111px, 30px, 0px) !important;
   border: 2px solid #6e00ff;
+}
+
+#myImgDropdown{
+  width: 115%;
+  transform: translate3d(92px, 27px, 10px) !important;
+  border: 1px solid #6e00ff;
+  border-radius: 5px;
 }
