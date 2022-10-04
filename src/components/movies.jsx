@@ -9,7 +9,6 @@ import { updateWatchLater } from "../services/watchLaterService";
 import auth from "../services/authService";
 import { paginate } from "../utils/paginate";
 
-import SearchBox from "./common/searchBox";
 import Pagination from "./common/pagination";
 import ListGroup from "./common/listGroup";
 import Dropdown from "./common/dropdown";
@@ -19,6 +18,7 @@ import VideoModal from "./videoModal";
 
 import listview_icon from "../icons/listview_icon.png";
 import cardview_icon from "../icons/cardview_icon.png";
+import filter_icon from "../icons/filter_icon.png";
 
 const user = auth.getCurrentUser();
 
@@ -33,24 +33,22 @@ class Movies extends Component {
       isOpen: false,
       movie: {},
     },
-    queries: [
-      { name: "Search by title", _id: 0 },
-      { name: "Search by rating", _id: 1 },
-      { name: "Search by year", _id: 2 },
-    ],
     sortItems: [
       { name: "Sort by title", _id: 0 },
       { name: "Sort by rating", _id: 1 },
       { name: "Sort by year", _id: 2 },
+    ],
+    viewType: [
+      { name: "Card View", _id: 0, imgSrc: cardview_icon },
+      { name: "List View", _id: 1, imgSrc: listview_icon },
     ],
     pageSize: 32,
     currentPage: 1,
     selectedGenre: { name: "All Genres" },
     selectedContent: { name: "All Content" },
     selectedCinema: { name: "All Cinema" },
-    selectedQuery: { name: "Search by title" },
     selectedSort: { name: "Sort by title" },
-    searchQuery: "",
+    selectedViewType: { name: "Card View" },
     sortColumn: { path: "title", order: "asc" },
   };
 
@@ -94,8 +92,12 @@ class Movies extends Component {
     this.setState({ selectedCinema: cinema, searchQuery: "", currentPage: 1 });
   };
 
-  handleQuerySelect = (query) => {
-    this.setState({ selectedQuery: query, searchQuery: "", currentPage: 1 });
+  handleViewTypeSelect = (viewType) => {
+    const { _id: id } = viewType;
+    this.setState({ selectedViewType: viewType });
+    if (id) {
+      this.setState({ isList: true });
+    } else this.setState({ isList: false });
   };
 
   handleSortSelected = (sort) => {
@@ -104,10 +106,6 @@ class Movies extends Component {
 
   handleSort = (sortColumn) => {
     this.setState({ sortColumn });
-  };
-
-  handleSearch = (query) => {
-    this.setState({ searchQuery: query, currentPage: 1 });
   };
 
   handleAddMovie = async (movie) => {
@@ -145,21 +143,21 @@ class Movies extends Component {
       selectedGenre,
       selectedCinema,
       selectedContent,
-      selectedQuery,
-      searchQuery,
       sortColumn,
     } = this.state;
+
+    const { selectedQuery, searchQuery } = this.props;
 
     let filtered = allMovies;
     let queryTitle = selectedQuery.name;
 
-    if (searchQuery && queryTitle === "Search by title")
+    if (searchQuery && queryTitle === "by title")
       filtered = filtered.filter((m) =>
         m.title.toLowerCase().startsWith(searchQuery.toLowerCase())
       );
-    if (searchQuery && queryTitle === "Search by rating")
+    if (searchQuery && queryTitle === "by rating")
       filtered = filtered.filter((m) => m.rating === parseFloat(searchQuery));
-    if (searchQuery && queryTitle === "Search by year")
+    if (searchQuery && queryTitle === "by year")
       filtered = filtered.filter((m) => m.year === parseInt(searchQuery));
     if (selectedGenre && selectedGenre._id)
       filtered = filtered.filter((m) => m.genre._id === selectedGenre._id);
@@ -184,16 +182,15 @@ class Movies extends Component {
       currentPage,
       genres,
       cinema,
+      viewType,
       contentType,
-      queries,
       sortItems,
       selectedGenre,
       selectedCinema,
+      selectedViewType,
       selectedContent,
-      selectedQuery,
       selectedSort,
       sortColumn,
-      searchQuery,
     } = this.state;
 
     const { totalCount, data: movies } = this.getPagedData();
@@ -201,25 +198,7 @@ class Movies extends Component {
 
     return (
       <>
-        <SearchBox
-          value={searchQuery}
-          onChange={this.handleSearch}
-          id={"moviesSearchBoxUp"}
-        />
-        <div className="input-group" id="moviesInputGroup">
-          <SearchBox
-            value={searchQuery}
-            onChange={this.handleSearch}
-            id={"moviesSearchBox"}
-          />
-          <Dropdown
-            items={queries}
-            selectedItem={selectedQuery}
-            onItemSelect={this.handleQuerySelect}
-            btnClass={"dropdown-toggle myListGroupDropdown"}
-            dropdownMenuId={"myListGroupDropdownMenu"}
-          />
-          <div className="divider" id="moviesSearchSortDivider" />
+        <div className="input-group" style={{ marginTop: "-38px" }}>
           {!isList && (
             <Dropdown
               items={sortItems}
@@ -227,23 +206,34 @@ class Movies extends Component {
               selectedItem={selectedSort}
               onSort={this.handleSort}
               onItemSelect={this.handleSortSelected}
-              btnClass={"dropdown-toggle myListGroupDropdown"}
-              dropdownMenuId={"myListGroupDropdownMenuSort"}
+              dropdownMenuId={"watchLaterSort"}
+              isSortIcon={true}
             />
           )}
-          <img
-            className="myImg hiddenImg"
-            style={{ margin: "0 6px ", height: "47px" }}
-            alt="card"
-            onClick={() => this.setState({ isList: false })}
-            src={cardview_icon}
-          />
-          <img
-            className="myImg hiddenImg"
-            style={{ height: "42px" }}
-            alt="list"
-            src={listview_icon}
-            onClick={() => this.setState({ isList: true })}
+          {!isList && (
+            <div
+              className="myDropdownBtn"
+              style={{ backgroundColor: "#181818", border: "none" }}
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseExample"
+              aria-expanded="false"
+              aria-controls="collapseExample"
+            >
+              <img
+                src={filter_icon}
+                alt=":"
+                style={{ height: "24px", marginRight: "2px" }}
+              />
+              Filters
+            </div>
+          )}
+          <Dropdown
+            items={viewType}
+            selectedItem={selectedViewType}
+            onItemSelect={this.handleViewTypeSelect}
+            dropdownMenuId={"myImgDropdown"}
+            areImages={true}
           />
         </div>
         <div>
@@ -341,28 +331,30 @@ class Movies extends Component {
           </div>
         ) : (
           <div className="row">
-            <div className="myModal" id="moviesDropdownCardview">
-              <h6
-                style={{ color: "rgb(130 142 153)", marginTop: "2px" }}
-                id="myFilterBy"
-              >
-                Filter By :
-              </h6>
-              <Dropdown
-                items={genres}
-                selectedItem={selectedGenre}
-                onItemSelect={this.handleGenreSelect}
-              />
-              <Dropdown
-                items={contentType}
-                selectedItem={selectedContent}
-                onItemSelect={this.handleContentSelect}
-              />
-              <Dropdown
-                items={cinema}
-                selectedItem={selectedCinema}
-                onItemSelect={this.handleCinemaSelect}
-              />
+            <div className="collapse" id="collapseExample">
+              <div className="myModal" id="moviesDropdownCardview">
+                <h6
+                  style={{ color: "rgb(130 142 153)", marginTop: "2px" }}
+                  id="myFilterBy"
+                >
+                  Filter By :
+                </h6>
+                <Dropdown
+                  items={genres}
+                  selectedItem={selectedGenre}
+                  onItemSelect={this.handleGenreSelect}
+                />
+                <Dropdown
+                  items={contentType}
+                  selectedItem={selectedContent}
+                  onItemSelect={this.handleContentSelect}
+                />
+                <Dropdown
+                  items={cinema}
+                  selectedItem={selectedCinema}
+                  onItemSelect={this.handleCinemaSelect}
+                />
+              </div>
             </div>
             <p>Showing {totalCount} Top Tier Movies.</p>
             <MoviesCardView
