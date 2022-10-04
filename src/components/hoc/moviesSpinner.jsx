@@ -1,18 +1,22 @@
 import { useState, useEffect, useCallback } from "react";
-import { PropagateLoader } from "react-spinners";
 
 import { getMovies } from "../../services/movieService";
 import { getGenres } from "../../services/genreService";
 import { getContentType } from "../../services/contentTypeService";
 import { getCinema } from "../../services/cinemaService";
 
+import CardPlaceHolder from "../common/cardPlaceholder";
 import Movies from "../movies";
 
-const MoviesSpinner = ({ onAddWatchLater }) => {
+const MoviesSpinner = ({ onAddWatchLater, selectedQuery, searchQuery }) => {
+  const [contentType, setContentType] = useState(null);
   const [movies, setMovies] = useState(null);
   const [genres, setGenres] = useState(null);
   const [cinema, setCinema] = useState(null);
-  const [contentType, setContentType] = useState(null);
+  let dummyArray = [];
+  for (let i = 0; i < 32; i++) {
+    dummyArray.push(i);
+  }
 
   const fetchMovies = useCallback(async () => {
     const { data } = await getMovies();
@@ -58,10 +62,28 @@ const MoviesSpinner = ({ onAddWatchLater }) => {
           cinema={cinema}
           contentType={contentType}
           onAddWatchLater={onAddWatchLater}
+          selectedQuery={selectedQuery}
+          searchQuery={searchQuery}
         />
       ) : (
-        <div className="mySpinner">
-          <PropagateLoader color="#6e00ff" />
+        <div style={{ marginTop: "-38px" }}>
+          <p
+            className="placeholder-wave"
+            style={{ width: "30%", marginBottom: "5px" }}
+          >
+            <span className="placeholder col-12"></span>
+          </p>
+          <p
+            className="placeholder-wave"
+            style={{ width: "15%", marginBottom: "15px" }}
+          >
+            <span className="placeholder col-12"></span>
+          </p>
+          <div className="row">
+            {dummyArray.map((value) => (
+              <CardPlaceHolder key={value} />
+            ))}
+          </div>
         </div>
       )}
     </div>
