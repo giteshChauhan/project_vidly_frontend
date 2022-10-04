@@ -8,14 +8,13 @@ import Customers from "./components/customers";
 import MovieForm from "./components/movieForm";
 import LoginForm from "./components/loginForm";
 import NotFound from "./components/notFound";
-import WatchLater from "./components/watchLater";
-import History from "./components/history";
 import NavBar from "./components/navBar";
 import Logout from "./components/logout";
 import Footer from "./components/footer";
 import Genres from "./components/genres";
+import WatchLaterSpinner from "./components/hoc/watchLaterSpinner";
 import MoviesSpinner from "./components/hoc/moviesSpinner";
-import Banner from "./components/banner";
+import HistorySpinner from "./components/hoc/historySpinner";
 
 import { getWatchLater } from "./services/watchLaterService";
 import auth from "./services/authService";
@@ -28,6 +27,15 @@ import "./css/AppResponsiveHeight.css";
 function App() {
   const [movieIds, setMovieIds] = useState([]);
   const [user, setUser] = useState();
+  const [selectedQuery, setSelectedQuery] = useState({
+    name: "by title",
+  });
+  const [searchQuery, setSearchQuery] = useState("");
+  const queries = [
+    { name: "by title", _id: 0 },
+    { name: "by rating", _id: 1 },
+    { name: "by year", _id: 2 },
+  ];
   const { pathname } = useLocation();
 
   const fetchWatchLaterMovieIds = useCallback(async () => {
@@ -49,6 +57,14 @@ function App() {
     setMovieIds(movieIdsCopy);
   };
 
+  const handleQuerySelect = (query) => {
+    setSelectedQuery(query);
+    setSearchQuery("");
+  };
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+  };
+
   useEffect(() => {
     const user = auth.getCurrentUser();
     setUser(user);
@@ -58,15 +74,29 @@ function App() {
   return (
     <>
       <ToastContainer />
-      <NavBar user={user} watchLaterSize={movieIds.length} />
-      {pathname === "/movies" && <Banner />}
+      <NavBar
+        user={user}
+        watchLaterSize={movieIds.length}
+        queries={queries}
+        selectedQuery={selectedQuery}
+        searchQuery={searchQuery}
+        onQuerySelect={handleQuerySelect}
+        onSearch={handleSearch}
+        pathname={pathname}
+      />
       <main className="container">
         <Routes>
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/login" element={<LoginForm />}></Route>
           <Route
             path="/movies"
-            element={<MoviesSpinner onAddWatchLater={handleWatchLaterSize} />}
+            element={
+              <MoviesSpinner
+                onAddWatchLater={handleWatchLaterSize}
+                selectedQuery={selectedQuery}
+                searchQuery={searchQuery}
+              />
+            }
           ></Route>
           <Route path="/not-found" element={<NotFound />}></Route>
           <Route
@@ -83,10 +113,12 @@ function App() {
             <Route
               path="/watchlater"
               element={
-                <WatchLater onRemoveWatchLater={handleRemoveWatchLaterSize} />
+                <WatchLaterSpinner
+                  onRemoveWatchLater={handleRemoveWatchLaterSize}
+                />
               }
             />
-            <Route path="/history" element={<History />} />
+            <Route path="/history" element={<HistorySpinner />} />
           </Route>
 
           <Route
