@@ -7,7 +7,6 @@ const SearchBox = ({ value, id, onChange }) => {
       type="text"
       value={value}
       onChange={(e) => onChange(e.currentTarget.value)}
-      style={{ marginBottom: 10 }}
       placeholder="Search..."
     />
   );
