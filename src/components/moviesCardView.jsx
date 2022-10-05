@@ -28,7 +28,7 @@ const MoviesCardView = ({ movies, onVideo, onAdd }) => {
               <div
                 className="card-title myTitle"
                 style={
-                  title.length < 20
+                  title.length < 18
                     ? { marginBottom: "41px", fontSize: "22px" }
                     : { fontSize: "22px" }
                 }
