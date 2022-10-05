@@ -65,17 +65,16 @@ const VideoModal = ({ isOpen, onClose, movie, onAdd }) => {
         <div className="modal-content">
           <div className="myModalFlex">
             <h6
-              className="modal-title myModal"
-              style={{ color: "#6e00ff", marginRight: "5px" }}
+              className="modal-title"
+              style={{ color: "#6e00ff", marginRight: "5px", fontSize: "20px" }}
               id="staticBackdropLabel"
             >
               {title} : {contentType}
             </h6>
-            <Header id={"videoModalHeader"} />
             <div className="divider"></div>
             <button
               type="button"
-              className="myCloseBtn m-2"
+              className="myCloseBtnMinimal"
               onClick={() => {
                 onClose();
                 setMore(false);
@@ -86,7 +85,7 @@ const VideoModal = ({ isOpen, onClose, movie, onAdd }) => {
           </div>
 
           <div className="my-modal-body">
-            <Header id={"videoModalHeaderResponsive"} />
+            <Header id={"videoModalHeader"} />
             <div className="videoPlayerModal">
               {ytId !== "" && <Videoplayer videoId={ytId} />}
             </div>
