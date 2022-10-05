@@ -131,6 +131,11 @@ html::-webkit-scrollbar-thumb:active {
   box-shadow: 0 0 3px 3px #6e00ff;
 }
 
+#bannerFinePrintText{
+  margin: 0 14px;
+  transform: translate3d(10px,230px,10px);
+}
+
 .offcanvas-lg{
   max-width: 70% !important;
 }
@@ -345,6 +350,16 @@ table{
   color: #a1aebb;
 }
 
+.myCloseBtnMinimal{
+  background-color: #181818;
+  color: #6e00ff;
+  border: none;
+  font-weight: bold;
+  font-size: 22px;
+  margin-top: -14px;
+  margin-right: 2px;
+}
+
 .myImg{
   height: 32px;
 }
@@ -426,8 +441,12 @@ table{
   margin: 0px 5px;
 }
 
-#videoModalHeaderResponsive{
-  display: none;
+#videoModalHeader{
+  display: flex;
+  margin: 0 4px;
+  margin-top: 1px;
+  align-items: center;
+  justify-content: center;
 }
 
 .my-modal-body{
