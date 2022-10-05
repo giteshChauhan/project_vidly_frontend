@@ -97,15 +97,6 @@
       align-items: center;
       justify-content: center;
     }
-    #videoModalHeader{
-      display: none;
-    }
-    #videoModalHeaderResponsive{
-      display: flex;
-      margin-top: 10px;
-      align-items: center;
-      justify-content: center;
-    }
     #staticBackdropLabel{
       margin-bottom: 8px !important;
     }
@@ -143,6 +134,7 @@
     .myBox{
       margin: 5rem 0;
     }
+    .hiddenImg{display: none;}
     #videoModalWatchLaterBtn{
       display: block;
       margin-top: 0px;
