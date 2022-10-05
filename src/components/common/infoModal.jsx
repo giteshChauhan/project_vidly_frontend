@@ -14,7 +14,7 @@ const InfoModal = ({ data }) => {
             <div className="divider"></div>
             <button
               type="button"
-              className="myCloseBtn m-2"
+              className="myCloseBtnMinimal m-2"
               onClick={() => {
                 onClose();
               }}
