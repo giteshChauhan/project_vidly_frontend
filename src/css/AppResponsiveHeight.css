@@ -2,11 +2,17 @@
     .my-modal-body{
       height:440px;
     }
+    #bannerFinePrintText{
+      transform: translate3d(10px,100px,10px);
+    }
   }
   
   @media screen and (max-height: 620px) {
     .my-modal-body{
       height:340px;
+    }
+    #bannerFinePrintText{
+      transform: translate3d(10px,0px,10px);
     }
   }
   @media screen and (max-height: 520px) {
