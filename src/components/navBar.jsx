@@ -193,7 +193,15 @@ function Navbar({
           </div>
 
           {pathname === "/movies" ? (
-            <div className="input-group" id="moviesInputGroup">
+            <div
+              className="input-group"
+              id="moviesInputGroup"
+              style={
+                user && user.isAdmin
+                  ? { marginRight: "55px", width: "39%" }
+                  : null
+              }
+            >
               <SearchBox
                 value={searchQuery}
                 onChange={onSearch}
