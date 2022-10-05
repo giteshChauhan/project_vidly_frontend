@@ -18,7 +18,7 @@ const Banner = () => {
         />
         Enjoy public movies ads-free.
       </p>
-      <p>
+      <p id="bannerFinePrintText">
         * This project uses youtubeDataApi to play movies or trailers. For more
         details about code , project and developer aka myself check out the
         footer below.
