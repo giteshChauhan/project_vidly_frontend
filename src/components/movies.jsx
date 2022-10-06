@@ -156,7 +156,7 @@ class Movies extends Component {
         m.title.toLowerCase().startsWith(searchQuery.toLowerCase())
       );
     if (searchQuery && queryTitle === "by rating")
-      filtered = filtered.filter((m) => m.rating === parseFloat(searchQuery));
+      filtered = filtered.filter((m) => m.rating >= parseFloat(searchQuery));
     if (searchQuery && queryTitle === "by year")
       filtered = filtered.filter((m) => m.year === parseInt(searchQuery));
     if (selectedGenre && selectedGenre._id)
