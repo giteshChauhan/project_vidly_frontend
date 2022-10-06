@@ -71,13 +71,13 @@ const MoviesSpinner = ({ onAddWatchLater, selectedQuery, searchQuery }) => {
             className="placeholder-wave"
             style={{ width: "30%", marginBottom: "5px" }}
           >
-            <span className="placeholder col-12"></span>
+            <span className="placeholder" style={{ width: "100%" }}></span>
           </p>
           <p
             className="placeholder-wave"
             style={{ width: "15%", marginBottom: "15px" }}
           >
-            <span className="placeholder col-12"></span>
+            <span className="placeholder" style={{ width: "100%" }}></span>
           </p>
           <div className="row">
             {dummyArray.map((value) => (
