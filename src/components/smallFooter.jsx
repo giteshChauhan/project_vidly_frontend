@@ -1,7 +1,25 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+
 import CopyRight from "./common/copyright";
+import Feedback from "./feedback";
+import Privacy from "./privacy";
+import Terms from "./terms";
 
 const SmallFooter = () => {
+  const [isTermsOpen, setIsTermsOpen] = useState(false);
+  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
+  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+
+  const handleTermsExit = () => {
+    setIsTermsOpen(false);
+  };
+  const handlePrivacyExit = () => {
+    setIsPrivacyOpen(false);
+  };
+  const handleFeedbackExit = () => {
+    setIsFeedbackOpen(false);
+  };
+
   return (
     <div
       className="myModalFlex"
@@ -12,16 +30,35 @@ const SmallFooter = () => {
         padding: "2rem 0 ",
       }}
     >
-      <Link className="a-design" to={"/login"} style={{ marginRight: "15px" }}>
+      <div
+        className="a-design"
+        style={{ marginRight: "15px" }}
+        onClick={() => setIsTermsOpen(true)}
+      >
         Terms
-      </Link>
-      <Link className="a-design" to={"/login"} style={{ marginRight: "15px" }}>
+      </div>
+      <div
+        className="a-design"
+        style={{ marginRight: "15px" }}
+        onClick={() => setIsPrivacyOpen(true)}
+      >
         Privacy
-      </Link>
-      <Link className="a-design" to={"/login"} style={{ marginRight: "30px" }}>
+      </div>
+      <div
+        className="a-design"
+        style={{ marginRight: "30px" }}
+        onClick={() => setIsFeedbackOpen(true)}
+      >
         Feedback
-      </Link>
+      </div>
       <CopyRight showVersion={false} />
+      {isTermsOpen && <Terms toOpen={isTermsOpen} onExit={handleTermsExit} />}
+      {isPrivacyOpen && (
+        <Privacy toOpen={isPrivacyOpen} onExit={handlePrivacyExit} />
+      )}
+      {isFeedbackOpen && (
+        <Feedback toOpen={isFeedbackOpen} onExit={handleFeedbackExit} />
+      )}
     </div>
   );
 };
