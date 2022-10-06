@@ -327,6 +327,11 @@ table{
   color: #a1aebb;
 }
 
+.a-design:hover{
+  color: #0d6efd;
+  cursor: pointer;
+}
+
 
 .myBtn{
   border: 2px solid white;
@@ -351,7 +356,7 @@ table{
 }
 
 .myCloseBtnMinimal{
-  background-color: #181818;
+  background: none;
   color: #6e00ff;
   border: none;
   font-weight: bold;
