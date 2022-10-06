@@ -3,9 +3,9 @@ import InfoModal from "./common/infoModal";
 import bannerPV_icon from "../icons/bannerPV_icon.png";
 import chill_icon from "../icons/chill_icon.png";
 
-const Banner = () => {
+const Banner = ({ toOpen, onExit }) => {
   const bannerData = (
-    <div className="myBanner">
+    <div className="myBanner" style={{ marginTop: "0" }}>
       <img src={bannerPV_icon} alt="bannerIcon" className="myBannerIcon" />
       <h1 className="myBannerTitle">Project_Vidly</h1>
       <p className="myBannerText">
@@ -26,7 +26,7 @@ const Banner = () => {
     </div>
   );
 
-  return <InfoModal data={bannerData} />;
+  return <InfoModal data={bannerData} toOpen={toOpen} onExit={onExit} />;
 };
 
 export default Banner;
