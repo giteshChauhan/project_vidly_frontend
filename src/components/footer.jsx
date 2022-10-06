@@ -1,8 +1,36 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+
 import CopyRight from "./common/copyright";
+import Feedback from "./feedback";
+import Privacy from "./privacy";
+import Banner from "./banner";
+import Terms from "./terms";
+
 import logo from "../icons/PVBW150.png";
 
 const Footer = () => {
+  const [isBannerOpen, setIsBannerOpen] = useState(false);
+  const [isTermsOpen, setIsTermsOpen] = useState(false);
+  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
+  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+
+  const handleTermsExit = () => {
+    setIsTermsOpen(false);
+  };
+
+  const handlePrivacyExit = () => {
+    setIsPrivacyOpen(false);
+  };
+
+  const handleFeedbackExit = () => {
+    setIsFeedbackOpen(false);
+  };
+
+  const handleBannerClose = () => {
+    setIsBannerOpen(false);
+  };
+
   return (
     <footer className="bd-footer py-4 py-md-5 mt-5">
       <div className="container py-4 py-md-5 px-4 px-md-3 mb-4">
@@ -25,14 +53,20 @@ const Footer = () => {
                 </Link>
               </li>
               <li className="mb-2">
-                <a href="/" className="a-design">
+                <span
+                  className="a-design"
+                  onClick={() => setIsBannerOpen(true)}
+                >
                   About
-                </a>
+                </span>
+                {isBannerOpen && (
+                  <Banner toOpen={isBannerOpen} onExit={handleBannerClose} />
+                )}
               </li>
               <li className="mb-2">
-                <Link to="/movies" className="a-design">
+                <div className="a-design" onClick={() => window.scrollTo(0, 0)}>
                   Movies
-                </Link>
+                </div>
               </li>
             </ul>
           </div>
@@ -40,14 +74,37 @@ const Footer = () => {
             <h5>Guides</h5>
             <ul className="list-unstyled">
               <li className="mb-2">
-                <a href="/" className="a-design">
-                  Getting started
-                </a>
+                <span className="a-design" onClick={() => setIsTermsOpen(true)}>
+                  Terms
+                </span>
+                {isTermsOpen && (
+                  <Terms toOpen={isTermsOpen} onExit={handleTermsExit} />
+                )}
               </li>
               <li className="mb-2">
-                <a href="/" className="a-design">
-                  Admin Tour
-                </a>
+                <span
+                  className="a-design"
+                  onClick={() => setIsPrivacyOpen(true)}
+                >
+                  Privacy
+                </span>
+                {isPrivacyOpen && (
+                  <Privacy toOpen={isPrivacyOpen} onExit={handlePrivacyExit} />
+                )}
+              </li>
+              <li className="mb-2">
+                <span
+                  className="a-design"
+                  onClick={() => setIsFeedbackOpen(true)}
+                >
+                  Feedback
+                </span>
+                {isFeedbackOpen && (
+                  <Feedback
+                    toOpen={isFeedbackOpen}
+                    onExit={handleFeedbackExit}
+                  />
+                )}
               </li>
             </ul>
           </div>
