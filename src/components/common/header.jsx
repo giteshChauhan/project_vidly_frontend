@@ -4,7 +4,7 @@ import chill_icon from "../../icons/chill_icon.png";
 const Header = ({ id = null }) => {
   return (
     <div className="myModalFlex" id={id}>
-      <Marquee direction="right" speed={40} gradient={false}>
+      <Marquee direction="right" speed={40} gradient={false} play={true}>
         <img src={chill_icon} alt="chill" className="myImg" />
         <h6
           className="modal-title "
