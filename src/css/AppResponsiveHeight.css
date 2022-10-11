@@ -1,32 +1,67 @@
-@media screen and (max-height: 750px) {
+@media screen and (max-height: 770px) {
     .my-modal-body{
-      height:440px;
+      height:560px;
     }
+  }
+
+  @media screen and (max-height: 750px) {
     #bannerFinePrintText{
       transform: translate3d(10px,100px,10px);
+    }
+  }
+
+  @media screen and (max-height: 720px) {
+    .my-modal-body{
+      height: 510px ;
+    }
+  }
+
+  @media screen and (max-height: 670px) {
+    .my-modal-body{
+      height: 480px ;
     }
   }
   
   @media screen and (max-height: 620px) {
     .my-modal-body{
-      height:340px;
+      height:410px;
     }
     #bannerFinePrintText{
       transform: translate3d(10px,0px,10px);
     }
   }
+  @media screen and (max-height:570px) {
+    .my-modal-body{
+      height:360px ;
+    }
+  }
   @media screen and (max-height: 520px) {
     .my-modal-body{
-      height:240px;
+      height:310px;
+    }
+  }
+  @media screen and (max-height: 470px) {
+    .my-modal-body{
+      height:260px;
     }
   }
   @media screen and (max-height: 420px) {
     .my-modal-body{
-      height:140px;
+      height:210px;
+    }
+  }
+  @media screen and (max-height: 370px) {
+    .my-modal-body{
+      height:160px;
     }
   }
   @media screen and (max-height: 320px) {
     .my-modal-body{
-      height:90px;
+      height:110px;
+    }
+  }
+  @media screen and (max-height: 270px) {
+    .my-modal-body{
+      height:60px;
     }
   }
