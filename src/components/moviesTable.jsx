@@ -53,7 +53,7 @@ class MoviesTable extends Component {
           content: () => (
             <img
               className="myImg"
-              onClick={() => toast.info("Please Login/Register 😊")}
+              onClick={() => toast.dark("ℹ️ Please Login/Register 😊")}
               alt="Add"
               src={add_disable}
             />
