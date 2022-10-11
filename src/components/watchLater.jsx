@@ -29,10 +29,10 @@ const WatchLater = ({ onRemoveWatchLater, moviesData }) => {
       );
       setMoviesDataCopy(movies);
       await removeWatchLater(movieWatchLater.movieId);
-      toast.success("Removed Successfully");
+      toast.dark("✔️ Removed Successfully");
     } catch (err) {
       setMoviesDataCopy(moviesCopy);
-      toast.error("Something Failed");
+      toast.dark("❗❗ Something failed");
     }
   };
 
