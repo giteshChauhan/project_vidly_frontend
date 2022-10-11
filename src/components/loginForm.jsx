@@ -1,3 +1,4 @@
+import { HashLoader } from "react-spinners";
 import Joi from "joi-browser";
 
 import SmallFooter from "./smallFooter";
@@ -9,6 +10,7 @@ class LoginForm extends Form {
   state = {
     data: { username: "", password: "" },
     errors: {},
+    isHash: false,
   };
 
   schema = {
@@ -22,6 +24,7 @@ class LoginForm extends Form {
 
   doSubmit = async () => {
     try {
+      this.setState({ isHash: true });
       const { data } = this.state;
       await auth.login(data.username, data.password);
       window.location = "/";
@@ -31,18 +34,53 @@ class LoginForm extends Form {
         errors.username = ex.response.data;
         this.setState({ errors });
       }
+      this.setState({ isHash: false });
     }
   };
 
   render() {
+    const { isHash } = this.state;
+
     return (
       <>
-        <div className="myBox">
-          <h1 style={{ marginBottom: "2rem" }}>Login</h1>
+        {isHash && (
+          <div
+            style={{
+              backgroundColor: " rgb(24 24 24 / 68%)",
+              height: "50%",
+              width: "87%",
+              position: "absolute",
+            }}
+          >
+            <HashLoader
+              color="#6e00ff"
+              style={{
+                display: "absolute",
+                position: "none",
+              }}
+            />
+          </div>
+        )}
+        <div className="myBox" style={{ marginBottom: "5rem" }}>
+          <h1
+            style={{
+              marginBottom: "2rem",
+              alignSelf: "center",
+              fontSize: "36px",
+            }}
+          >
+            Login
+          </h1>
           <form onSubmit={this.handleSubmit}>
-            {this.renderInput("username", "Username", "text", true)}
-            {this.renderInput("password", "Password", "password")}
-            {this.renderButtonMaxWidth("Login")}
+            <fieldset disabled={isHash}>
+              {this.renderInput("username", "Username", "text", true)}
+              {this.renderInput("password", "Password", "password")}
+              {this.renderButton("Login", {
+                marginTop: "25px",
+                background: "#6e00ff",
+                width: "100%",
+              })}
+            </fieldset>
           </form>
         </div>
         <SmallFooter />
