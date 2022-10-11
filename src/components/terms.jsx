@@ -23,8 +23,8 @@ const Terms = ({ toOpen, onExit }) => {
             <li>Hashed user password</li>
             <li>Username</li>
             <li>OS Details</li>
+            <li>IP Address</li>
             <li>Movies/Trailers history</li>
-            <li>Movies/Trailers playback time on daily basis</li>
             <li>Movies/Trailers in watchlater</li>
           </ul>
         </li>
