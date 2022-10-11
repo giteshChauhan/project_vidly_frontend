@@ -12,7 +12,7 @@ herokuServices.interceptors.response.use(null, (error) => {
 
   if (!expectedError) {
     logger.log(error);
-    toast.error("An unexpected error occured.");
+    toast.dark("❗❗ Unexpected error occured");
   }
 
   return Promise.reject(error);
