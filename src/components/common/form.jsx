@@ -2,6 +2,7 @@ import { Component } from "react";
 import Joi from "joi-browser";
 import Input from "./input";
 import Select from "./select";
+import Textarea from "./textarea";
 
 class Form extends Component {
   state = {
@@ -48,37 +49,54 @@ class Form extends Component {
     this.setState({ data, errors });
   };
 
-  renderButtonMaxWidth(label) {
+  renderButton(label, style = { marginTop: "12px", background: "#6e00ff" }) {
     return (
       <button
         disabled={this.validate()}
         className="btn btn-primary"
-        style={{ marginTop: "25px", background: "#6e00ff", width: "100%" }}
+        style={style}
       >
         {label}
       </button>
     );
   }
 
-  renderButton(label) {
-    return (
-      <button
-        disabled={this.validate()}
-        className="btn btn-primary"
-        style={{ marginTop: "12px", background: "#6e00ff" }}
-      >
-        {label}
-      </button>
-    );
-  }
-
-  renderInput(name, label, type = "text", autoFocus = false) {
+  renderInput(
+    name,
+    label,
+    type = "text",
+    autoFocus = false,
+    disabled = false,
+    className = null
+  ) {
     const { data, errors } = this.state;
+    let classN = "form-control";
+    if (className) {
+      classN = classN + " " + className;
+    }
 
     return (
       <Input
         autoFocus={autoFocus}
+        autoComplete="off"
+        disabled={disabled}
+        className={classN}
         type={type}
+        name={name}
+        value={data[name]}
+        label={label}
+        error={errors[name]}
+        onChange={this.handleChange}
+      />
+    );
+  }
+
+  renderTextarea(name, label, rows = 1) {
+    const { data, errors } = this.state;
+
+    return (
+      <Textarea
+        rows={rows}
         name={name}
         value={data[name]}
         label={label}
