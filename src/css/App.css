@@ -83,8 +83,7 @@ html::-webkit-scrollbar-thumb:active {
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin: 5rem 26rem;
+  margin: 2rem 26rem;
   padding: 2rem;
 }
 
@@ -459,7 +458,6 @@ table{
   padding: var(--bs-modal-padding);
   position: relative;
   overflow-y: auto;
-  height: 570px;
 }
 
 .divider{
