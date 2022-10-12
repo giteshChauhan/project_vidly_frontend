@@ -68,7 +68,7 @@ class RegisterForm extends Form {
         toast.dark("❗❗ Invalid email");
       }
     } catch (ex) {
-      toast.dark("❗❗ Try again later.");
+      toast.dark("❗❗ Try again.");
       this.setState({ isHash: false });
     }
   };
