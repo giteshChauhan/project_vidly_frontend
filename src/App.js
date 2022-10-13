@@ -12,6 +12,7 @@ import NavBar from "./components/navBar";
 import Logout from "./components/logout";
 import Footer from "./components/footer";
 import Genres from "./components/genres";
+import Profile from "./components/profile";
 import WatchLaterSpinner from "./components/hoc/watchLaterSpinner";
 import MoviesSpinner from "./components/hoc/moviesSpinner";
 import HistorySpinner from "./components/hoc/historySpinner";
@@ -119,6 +120,10 @@ function App() {
               }
             />
             <Route path="/history" element={<HistorySpinner />} />
+            <Route
+              path="/profile"
+              element={<Profile watchLaterSize={movieIds.length} />}
+            />
           </Route>
 
           <Route
@@ -135,7 +140,8 @@ function App() {
       pathname === "/watchlater" ||
       pathname === "/history" ||
       pathname === "/customers" ||
-      pathname === "/not-found" ? null : (
+      pathname === "/not-found" ||
+      pathname === "/profile" ? null : (
         <Footer />
       )}
     </>
