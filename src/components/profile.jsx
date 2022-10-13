@@ -18,7 +18,7 @@ const Profile = ({ watchLaterSize }) => {
   const instPanel = (l, r) => {
     return (
       <div>
-        <span className="myTitle">{l}</span>
+        <span style={{ color: "#6e00ff" }}>{l}</span>
         {"  : "}
         <span style={{ color: "#e2dada" }}>{r}</span>
       </div>
@@ -53,7 +53,7 @@ const Profile = ({ watchLaterSize }) => {
           <div className="myModalFlex">
             <h4>User Details</h4>
             <div className="divider" />
-            <span className="myTitle">{country.toUpperCase()}</span>
+            <span style={{ color: "#6e00ff" }}>{country.toUpperCase()}</span>
           </div>
           <div style={{ fontSize: "18px" }}>
             {instPanel("Email", email)}
