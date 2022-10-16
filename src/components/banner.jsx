@@ -9,7 +9,7 @@ const Banner = ({ toOpen, onExit }) => {
       <img src={bannerPV_icon} alt="bannerIcon" className="myBannerIcon" />
       <h1 className="myBannerTitle">Project_Vidly</h1>
       <p className="myBannerText">
-        Watch over 250+ top tier movies.
+        Watch and rent over 250+ top tier movies.
         <img
           src={chill_icon}
           alt="Chill"
