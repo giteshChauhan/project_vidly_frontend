@@ -42,14 +42,14 @@ class Movies extends Component {
       { name: "Card View", _id: 0, imgSrc: cardview_icon },
       { name: "List View", _id: 1, imgSrc: listview_icon },
     ],
-    pageSize: 32,
+    pageSize: 64,
     currentPage: 1,
     selectedGenre: { name: "All Genres" },
     selectedContent: { name: "All Content" },
     selectedCinema: { name: "All Cinema" },
     selectedSort: { name: "Sort by title" },
     selectedViewType: { name: "Card View" },
-    sortColumn: { path: "title", order: "asc" },
+    sortColumn: { path: "title", order: "desc" },
   };
 
   componentDidMount() {
