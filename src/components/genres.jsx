@@ -96,24 +96,24 @@ const Genres = () => {
       originalGenres[index].name = genre.name;
       setGenres(originalGenres);
       await editGenre(genre);
-      toast.dark("✔️ Genre edited successfully");
+      toast.success("Genre edited successfully");
     } catch (ex) {
       if (ex.response && (ex.response.status === 404 || 400))
-        toast.dark(`❗❗ ${ex.response.data}`);
+        toast.error(`${ex.response.data}`);
     }
   };
 
   const handleNewGenre = async () => {
     try {
       const { data: genre } = await addGenre({ name: name });
-      toast.dark(`✔️ ${genre.name} added sucessfully`);
+      toast.success(`${genre.name} added sucessfully`);
       let originalGenres = [...genres];
       originalGenres.push(genre);
       setGenres(originalGenres);
       setName("");
     } catch (ex) {
       if (ex.response && ex.response.status === 400)
-        toast.dark(`❗❗ ${ex.response.data}`);
+        toast.error(`${ex.response.data}`);
     }
   };
 
@@ -142,10 +142,10 @@ const Genres = () => {
 
     try {
       await deleteGenre(genre._id);
-      toast.dark(`✔️ ${genre.name} deleted sucessfully`);
+      toast.success(`${genre.name} deleted sucessfully`);
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
-        toast.dark("❗❗ This genre has already been deleted");
+        toast.error("This genre has already been deleted");
       setGenres(originalGenres);
     }
   };
