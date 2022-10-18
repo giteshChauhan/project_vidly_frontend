@@ -38,14 +38,14 @@ class Feedback extends Form {
         feedback: message,
         ip,
       });
-      toast.dark("✔️ Sent");
+      toast.success("Sent 🥰");
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };
         errors.username = ex.response.data;
         this.setState({ errors, isForm: false });
       }
-      toast.dark("❗❗ Try again later 🙂");
+      toast.error("Try again later 🙂");
     }
   };
 
@@ -66,10 +66,10 @@ class Feedback extends Form {
           this.submitFeedback(email, message, ip);
         } else {
           this.setState({ inputClass: "is-invalid", isForm: false });
-          toast.dark("❗❗ Invalid email");
+          toast.error("Invalid email");
         }
       } catch (ex) {
-        toast.dark("❗❗ Try again later 🙂");
+        toast.error("Try again later 🙂");
       }
     this.setState({ isHash: false });
   };
