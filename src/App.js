@@ -8,13 +8,13 @@ import Customers from "./components/customers";
 import MovieForm from "./components/movieForm";
 import LoginForm from "./components/loginForm";
 import NotFound from "./components/notFound";
+import Profile from "./components/profile";
 import NavBar from "./components/navBar";
 import Logout from "./components/logout";
 import Footer from "./components/footer";
 import Genres from "./components/genres";
-import Profile from "./components/profile";
+import Movies from "./components/movies";
 import WatchLaterSpinner from "./components/hoc/watchLaterSpinner";
-import MoviesSpinner from "./components/hoc/moviesSpinner";
 import HistorySpinner from "./components/hoc/historySpinner";
 
 import { getWatchLater } from "./services/watchLaterService";
@@ -92,7 +92,7 @@ function App() {
           <Route
             path="/movies"
             element={
-              <MoviesSpinner
+              <Movies
                 onAddWatchLater={handleWatchLaterSize}
                 selectedQuery={selectedQuery}
                 searchQuery={searchQuery}
