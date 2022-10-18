@@ -74,7 +74,7 @@ function App() {
 
   return (
     <>
-      <ToastContainer />
+      <ToastContainer autoClose={1000} limit={1} theme="dark" />
       <NavBar
         user={user}
         watchLaterSize={movieIds.length}
