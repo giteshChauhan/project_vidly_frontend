@@ -31,6 +31,7 @@ class Movies extends Component {
   state = {
     isMovies: true,
     isList: false,
+    isContents: false,
     movies: [],
     genres: [],
     contentType: [],
@@ -70,7 +71,7 @@ class Movies extends Component {
     this.setState({ cinema });
     const { data: content } = await getContentType();
     const contentType = [{ name: "All Content", _id: 0 }, ...content];
-    this.setState({ contentType });
+    this.setState({ contentType, isContents: true });
   }
 
   handleDelete = async (movie) => {
@@ -230,6 +231,7 @@ class Movies extends Component {
     const {
       isMovies,
       isList,
+      isContents,
       pageSize,
       currentPage,
       genres,
@@ -255,7 +257,7 @@ class Movies extends Component {
     return (
       <>
         <div className="input-group" style={{ marginTop: "-38px" }}>
-          {!isList && (
+          {!isList && isContents && (
             <Dropdown
               items={sortItems}
               sortColumn={sortColumn}
@@ -266,7 +268,7 @@ class Movies extends Component {
               isSortIcon={true}
             />
           )}
-          {!isList && (
+          {!isList && isContents && (
             <div
               className="myDropdownBtn"
               style={{ backgroundColor: "#181818", border: "none" }}
@@ -284,32 +286,34 @@ class Movies extends Component {
               Filters
             </div>
           )}
-          <Dropdown
-            items={viewType}
-            selectedItem={selectedViewType}
-            onItemSelect={this.handleViewTypeSelect}
-            dropdownMenuId={"myImgDropdown"}
-            areImages={true}
-          />
+          {isContents && (
+            <Dropdown
+              items={viewType}
+              selectedItem={selectedViewType}
+              onItemSelect={this.handleViewTypeSelect}
+              dropdownMenuId={"myImgDropdown"}
+              areImages={true}
+            />
+          )}
         </div>
         <div>
-          {user && user.isAdmin && (
-            <Link
-              className="btn btn-primary"
-              style={{ marginRight: "15px", background: "#6e00ff" }}
-              to={"/movies/new"}
-            >
-              New Movie
-            </Link>
-          )}
-          {user && user.isAdmin && (
-            <Link
-              className="btn btn-primary"
-              style={{ margin: "5px 0px", background: "#6e00ff" }}
-              to={"/genres"}
-            >
-              Edit Genres
-            </Link>
+          {user && user.isAdmin && isContents && (
+            <>
+              <Link
+                className="btn btn-primary"
+                style={{ marginRight: "15px", background: "#6e00ff" }}
+                to={"/movies/new"}
+              >
+                New Movie
+              </Link>
+              <Link
+                className="btn btn-primary"
+                style={{ margin: "5px 0px", background: "#6e00ff" }}
+                to={"/genres"}
+              >
+                Edit Genres
+              </Link>
+            </>
           )}
         </div>
         {isList ? (
@@ -367,24 +371,52 @@ class Movies extends Component {
           </div>
         ) : (
           <div className="row">
-            <div className="collapse" id="collapseExample">
-              <div className="myModal" id="moviesDropdownCardview">
-                {this.handleFiltersComponent()}
-              </div>
-            </div>
-            <p>Showing {totalCount} Top Tier Movies.</p>
-            {movies.length === 0 && isMovies ? (
-              <div className="row">
-                {dummyArray.map((value) => (
-                  <CardPlaceHolder key={value} />
-                ))}
+            {isContents ? (
+              <div className="collapse" id="collapseExample">
+                <div className="myModal" id="moviesDropdownCardview">
+                  {this.handleFiltersComponent()}
+                </div>
               </div>
             ) : (
-              <MoviesCardView
-                movies={movies}
-                onVideo={this.handleVideoModal}
-                onAdd={this.handleAddMovie}
-              />
+              <div style={{ marginTop: "-5px" }}>
+                <p
+                  className="placeholder-wave"
+                  style={{ width: "30%", marginBottom: "5px" }}
+                >
+                  <span
+                    className="placeholder"
+                    style={{ width: "100%" }}
+                  ></span>
+                </p>
+              </div>
+            )}
+
+            {movies.length === 0 && isMovies ? (
+              <>
+                <p
+                  className="placeholder-wave"
+                  style={{ width: "15%", marginBottom: "15px" }}
+                >
+                  <span
+                    className="placeholder"
+                    style={{ width: "100%" }}
+                  ></span>
+                </p>
+                <div className="row">
+                  {dummyArray.map((value) => (
+                    <CardPlaceHolder key={value} />
+                  ))}
+                </div>
+              </>
+            ) : (
+              <>
+                <p>Showing {totalCount} Top Tier Movies.</p>
+                <MoviesCardView
+                  movies={movies}
+                  onVideo={this.handleVideoModal}
+                  onAdd={this.handleAddMovie}
+                />
+              </>
             )}
             <Pagination
               itemsCount={totalCount}
