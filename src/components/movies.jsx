@@ -3,15 +3,20 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import _ from "lodash";
 
-import { deleteMovie } from "../services/movieService";
+import { deleteMovie, getMovies } from "../services/movieService";
 import { updateWatchLater } from "../services/watchLaterService";
+import { getContentType } from "../services/contentTypeService";
+import { getCinema } from "../services/cinemaService";
+import { getGenres } from "../services/genreService";
 
 import auth from "../services/authService";
 import { paginate } from "../utils/paginate";
 
+import CardPlaceHolder from "./common/cardPlaceholder";
 import Pagination from "./common/pagination";
 import ListGroup from "./common/listGroup";
 import Dropdown from "./common/dropdown";
+
 import MoviesCardView from "./moviesCardView";
 import MoviesTable from "./moviesTable";
 import VideoModal from "./videoModal";
@@ -24,6 +29,7 @@ const user = auth.getCurrentUser();
 
 class Movies extends Component {
   state = {
+    isMovies: true,
     isList: false,
     movies: [],
     genres: [],
@@ -52,10 +58,19 @@ class Movies extends Component {
     sortColumn: { path: "title", order: "desc" },
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     document.title = "VIDLY | Home";
-    const { movies, genres, cinema, contentType } = this.props;
-    this.setState({ movies, genres, cinema, contentType });
+    const { data: movies } = await getMovies();
+    this.setState({ movies, isMovies: false });
+    const { data: genresO } = await getGenres();
+    const genres = [{ name: "All Genres", _id: 0 }, ...genresO];
+    this.setState({ genres });
+    const { data: cinemaO } = await getCinema();
+    const cinema = [{ name: "All Cinema", _id: 0 }, ...cinemaO];
+    this.setState({ cinema });
+    const { data: content } = await getContentType();
+    const contentType = [{ name: "All Content", _id: 0 }, ...content];
+    this.setState({ contentType });
   }
 
   handleDelete = async (movie) => {
@@ -135,6 +150,42 @@ class Movies extends Component {
     this.setState({ videoModal });
   };
 
+  handleFiltersComponent = () => {
+    const {
+      genres,
+      cinema,
+      contentType,
+      selectedGenre,
+      selectedCinema,
+      selectedContent,
+    } = this.state;
+    return (
+      <>
+        <h6
+          style={{ color: "rgb(130 142 153)", marginTop: "2px" }}
+          id="myFilterBy"
+        >
+          Filter By :
+        </h6>
+        <Dropdown
+          items={genres}
+          selectedItem={selectedGenre}
+          onItemSelect={this.handleGenreSelect}
+        />
+        <Dropdown
+          items={contentType}
+          selectedItem={selectedContent}
+          onItemSelect={this.handleContentSelect}
+        />
+        <Dropdown
+          items={cinema}
+          selectedItem={selectedCinema}
+          onItemSelect={this.handleCinemaSelect}
+        />
+      </>
+    );
+  };
+
   getPagedData = () => {
     const {
       pageSize,
@@ -153,7 +204,7 @@ class Movies extends Component {
 
     if (searchQuery && queryTitle === "by title")
       filtered = filtered.filter((m) =>
-        m.title.toLowerCase().startsWith(searchQuery.toLowerCase())
+        m.title.toLowerCase().includes(searchQuery.toLowerCase())
       );
     if (searchQuery && queryTitle === "by rating")
       filtered = filtered.filter((m) => m.rating >= parseFloat(searchQuery));
@@ -177,6 +228,7 @@ class Movies extends Component {
 
   render() {
     const {
+      isMovies,
       isList,
       pageSize,
       currentPage,
@@ -195,6 +247,10 @@ class Movies extends Component {
 
     const { totalCount, data: movies } = this.getPagedData();
     const { isOpen: openVideo, movie } = this.state.videoModal;
+    let dummyArray = [];
+    for (let i = 0; i < 32; i++) {
+      dummyArray.push(i);
+    }
 
     return (
       <>
@@ -290,27 +346,7 @@ class Movies extends Component {
             </div>
             <div className="col">
               <div className="myModal" id="moviesFilterDropdown">
-                <h6
-                  style={{ color: "rgb(130 142 153)", marginTop: "2px" }}
-                  id="myFilterBy"
-                >
-                  Filter By :
-                </h6>
-                <Dropdown
-                  items={genres}
-                  selectedItem={selectedGenre}
-                  onItemSelect={this.handleGenreSelect}
-                />
-                <Dropdown
-                  items={contentType}
-                  selectedItem={selectedContent}
-                  onItemSelect={this.handleContentSelect}
-                />
-                <Dropdown
-                  items={cinema}
-                  selectedItem={selectedCinema}
-                  onItemSelect={this.handleCinemaSelect}
-                />
+                {this.handleFiltersComponent()}
               </div>
               <p>Showing {totalCount} Top Tier Movies.</p>
               <MoviesTable
@@ -333,35 +369,23 @@ class Movies extends Component {
           <div className="row">
             <div className="collapse" id="collapseExample">
               <div className="myModal" id="moviesDropdownCardview">
-                <h6
-                  style={{ color: "rgb(130 142 153)", marginTop: "2px" }}
-                  id="myFilterBy"
-                >
-                  Filter By :
-                </h6>
-                <Dropdown
-                  items={genres}
-                  selectedItem={selectedGenre}
-                  onItemSelect={this.handleGenreSelect}
-                />
-                <Dropdown
-                  items={contentType}
-                  selectedItem={selectedContent}
-                  onItemSelect={this.handleContentSelect}
-                />
-                <Dropdown
-                  items={cinema}
-                  selectedItem={selectedCinema}
-                  onItemSelect={this.handleCinemaSelect}
-                />
+                {this.handleFiltersComponent()}
               </div>
             </div>
             <p>Showing {totalCount} Top Tier Movies.</p>
-            <MoviesCardView
-              movies={movies}
-              onVideo={this.handleVideoModal}
-              onAdd={this.handleAddMovie}
-            />
+            {movies.length === 0 && isMovies ? (
+              <div className="row">
+                {dummyArray.map((value) => (
+                  <CardPlaceHolder key={value} />
+                ))}
+              </div>
+            ) : (
+              <MoviesCardView
+                movies={movies}
+                onVideo={this.handleVideoModal}
+                onAdd={this.handleAddMovie}
+              />
+            )}
             <Pagination
               itemsCount={totalCount}
               pageSize={pageSize}
