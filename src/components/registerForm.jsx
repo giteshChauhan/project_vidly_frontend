@@ -65,10 +65,10 @@ class RegisterForm extends Form {
         }
       } else {
         this.setState({ inputClass: "is-invalid", isHash: false });
-        toast.dark("❗❗ Invalid email");
+        toast.error("Invalid email");
       }
     } catch (ex) {
-      toast.dark("❗❗ Try again.");
+      toast.error("Try again.");
       this.setState({ isHash: false });
     }
   };
