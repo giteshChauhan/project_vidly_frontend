@@ -65,9 +65,9 @@ class Movies extends Component {
       movies = movies.filter((m) => m._id !== movie._id);
       this.setState({ movies });
       await deleteMovie(movie._id);
-      toast.dark(`✔️ ${movie.title} deleted successfully`);
+      toast.success(`${movie.title} deleted successfully`);
     } catch (error) {
-      toast.dark("❗❗ Invalid email");
+      toast.error("Invalid email");
       this.setState({ movies: originalMovies });
     }
   };
@@ -113,11 +113,11 @@ class Movies extends Component {
       try {
         await updateWatchLater({ movieId: movie._id });
         this.props.onAddWatchLater(movie);
-        toast.dark("✔️ Movie Added");
+        toast.success("Movie Added");
       } catch (err) {
-        toast.dark(`ℹ️ ${err.response.data}`);
+        toast.info(`${err.response.data}`);
       }
-    } else toast.dark("ℹ️ Please login/register");
+    } else toast.info("Please login/register");
   };
 
   handleVideoModal = (movie) => {
