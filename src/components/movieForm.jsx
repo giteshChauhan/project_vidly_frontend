@@ -106,7 +106,7 @@ class MovieFormComponent extends Form {
     const { data } = this.state;
     await saveMovie(data, this.props.params.id);
     this.props.navigate("/movies", { replace: true });
-    toast.dark(`✔️ ${data.title} added to db`);
+    toast.success(`${data.title} added to db`);
   };
 
   handleSearchChange = (searchTitle) => {
@@ -175,7 +175,7 @@ class MovieFormComponent extends Form {
     let moviesMetaData = data.results;
     if (moviesMetaData === undefined) {
       moviesMetaData = [];
-      toast.dark("❗❗ Something failed.");
+      toast.error("Something failed.");
     }
     this.setState({ moviesMetaData });
   };
