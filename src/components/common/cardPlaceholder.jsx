@@ -3,7 +3,7 @@ const CardPlaceHolder = () => {
     <div
       className="card"
       aria-hidden="true"
-      style={{ width: "298px", padding: "0", margin: "15px" }}
+      style={{ width: "298px", padding: "0", margin: "10px" }}
     >
       <svg
         className="bd-placeholder-img card-img-top"
