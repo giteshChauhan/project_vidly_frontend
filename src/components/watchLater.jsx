@@ -40,8 +40,8 @@ const WatchLater = ({ onRemoveWatchLater, moviesData }) => {
     setSelectedItem(item);
     if (item._id === 0) {
       moviesDataCopy.sort(({ movie: a }, { movie: b }) => {
-        if (a.addedOn >= b.addedOn) return 1;
-        else return -1;
+        if (a.addedOn >= b.addedOn) return -1;
+        else return 1;
       });
     }
     if (item._id === 1) {
@@ -52,8 +52,8 @@ const WatchLater = ({ onRemoveWatchLater, moviesData }) => {
     }
     if (item._id === 2) {
       moviesDataCopy.sort(({ movie: a }, { movie: b }) => {
-        if (b.addedOn >= a.addedOn) return 1;
-        else return -1;
+        if (b.addedOn >= a.addedOn) return -1;
+        else return 1;
       });
     }
     setMoviesDataCopy(moviesDataCopy);
