@@ -15,7 +15,7 @@ const WatchLater = ({ onRemoveWatchLater, moviesData }) => {
     { name: "Most Popular", _id: 1 },
     { name: "Oldest First", _id: 2 },
   ];
-  const [selectedItem, setSelectedItem] = useState(sortItems[0]);
+  const [selectedItem, setSelectedItem] = useState(sortItems[2]);
 
   useEffect(() => {
     document.title = "VIDLY | WatchLater";
