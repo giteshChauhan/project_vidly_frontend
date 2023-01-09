@@ -11,6 +11,7 @@ const HistorySpinner = () => {
 
   const fetchHistoryMovies = useCallback(async () => {
     const { data } = await getHistory();
+    _.reverse(data);
     setMoviesData(data);
   }, []);
 
