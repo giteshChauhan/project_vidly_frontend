@@ -1,4 +1,4 @@
-# project_vidly_frontend : https://projectvidly.netlify.app
+# project_vidly_frontend
 
 ## Backend: https://github.com/giteshChauhan/project_vidly
 
